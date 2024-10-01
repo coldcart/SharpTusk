@@ -66,7 +66,7 @@ namespace Tusk.Test.Api
         /// <summary>
         /// Test GetaShipmentbyID
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Example test case, replace with proper test case")]
         public void GetaShipmentbyIDTest()
         {
             // TODO uncomment below to test the method and replace null with proper value

@@ -66,7 +66,7 @@ namespace Tusk.Test.Api
         /// <summary>
         /// Test GetallshipfromLocations
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Example test case, replace with proper test case")]
         public void GetallshipfromLocationsTest()
         {
             var response = instance.GetallshipfromLocations();
