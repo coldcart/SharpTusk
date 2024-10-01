@@ -184,7 +184,7 @@ namespace Tusk.Client
         /// Initializes a new instance of the <see cref="ReadableConfiguration" /> class
         /// </summary>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
-        public ReadableConfiguration(TuskClientOptions options)
+        public ReadableConfiguration(TuskClientOptions options): this()
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -193,7 +193,6 @@ namespace Tusk.Client
             Proxy = null;
             UserAgent = WebUtility.UrlEncode("OpenAPI-Generator/1.0.0/csharp");
             Timeout = 100000;
-            
         }
 
         #endregion Constructors

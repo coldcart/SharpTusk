@@ -16,7 +16,6 @@ public static class Helpers
     {
         if (configureOptions == null) throw new ArgumentNullException(nameof(configureOptions));
 
-        // Register the options
         services.Configure(configureOptions);
         
         services.AddSingleton<IReadableConfiguration>(sp =>
@@ -27,7 +26,6 @@ public static class Helpers
 
         if (useRetryHandler)
         {
-            // Register RetryHandler
             services.AddTransient<RetryHandler>(sp =>
             {
                 var options = sp.GetRequiredService<IOptions<TuskClientOptions>>().Value;
@@ -35,25 +33,44 @@ public static class Helpers
             });
         }
 
-        // Register ApiClient with HttpClientFactory
-        var httpClientBuilder = services.AddHttpClient<ApiClient>((sp, client) =>
+        var httpClientBuilder = services.AddHttpClient("TuskClient", (sp, client) =>
         {
             var options = sp.GetRequiredService<IOptions<TuskClientOptions>>().Value;
             client.BaseAddress = new Uri(options.BaseUrl);
             client.DefaultRequestHeaders.Add("x-api-key", options.ApiKey);
+        });
+
+        if (useRetryHandler)
+        {
+            httpClientBuilder.AddHttpMessageHandler<RetryHandler>();
+        }
+
+        services.AddScoped<ApiClient>(sp =>
+        {
+            var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+            var httpClient = httpClientFactory.CreateClient("TuskClient");
+            if (useRetryHandler)
+            {
+                var retryHandler = sp.GetRequiredService<RetryHandler>();
+
+                return new ApiClient(httpClient, retryHandler: retryHandler);
+            }
+            return new ApiClient(httpClient);
         });
         if (useRetryHandler)
         {
             httpClientBuilder.AddHttpMessageHandler<RetryHandler>();
         }
 
-        // Register TuskClient
         services.AddScoped<TuskClient>(sp =>
         {
             var apiClient = sp.GetRequiredService<ApiClient>();
             var configuration = sp.GetRequiredService<IReadableConfiguration>();
             return new TuskClient(apiClient, configuration);
         });
+        
+        services.AddScoped<ITuskClient>(sp => sp.GetRequiredService<TuskClient>());
+
 
         return services;
     }
@@ -63,8 +80,9 @@ public static class Helpers
     /// </summary>
     /// <param name="configureOptions">An action to configure TuskClientOptions.</param>
     /// <param name="useRetryHandler">Whether to include RetryHandler.</param>
+    /// <param name="httpMessageHandler">An optional HttpMessageHandler.</param>
     /// <returns>An instance of TuskClient.</returns>
-    public static TuskClient Create(Action<TuskClientOptions> configureOptions, bool useRetryHandler = false)
+    public static TuskClient Create(Action<TuskClientOptions> configureOptions, bool useRetryHandler = false, HttpMessageHandler? httpMessageHandler = null)
     {
         if (configureOptions == null) throw new ArgumentNullException(nameof(configureOptions));
 
@@ -78,7 +96,7 @@ public static class Helpers
         {
             var retryHandler = new RetryHandler(options.MaxRetries, options.RetryDelay)
             {
-                InnerHandler = new HttpClientHandler()
+                InnerHandler = httpMessageHandler ?? new HttpClientHandler()
             };
             var httpClient = new HttpClient(retryHandler)
             {
