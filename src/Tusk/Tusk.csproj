@@ -7,15 +7,15 @@
     <AssemblyName>Tusk</AssemblyName>
     <PackageId>Tusk</PackageId>
     <OutputType>Library</OutputType>
-    <Authors>ColdCart</Authors>
-    <Company>ColdCart</Company>
+    <Authors>Coldcart</Authors>
+    <Company>Coldcart</Company>
     <AssemblyTitle>Tusk SDK Library</AssemblyTitle>
     <Description>Tusk SDK Client for .NET</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>Tusk</RootNamespace>
-    <Version>1.0.1</Version>
+    <Version>1.0.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Tusk.xml</DocumentationFile>
-    <RepositoryUrl>https://github.com/GIT_USER_ID/GIT_REPO_ID.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/coldcart/TuskCSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>Minor update</PackageReleaseNotes>
     <Nullable>annotations</Nullable>
