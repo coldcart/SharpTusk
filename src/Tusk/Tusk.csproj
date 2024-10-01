@@ -17,6 +17,9 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Tusk.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/coldcart/TuskCSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/coldcart/TuskCSharp</PackageProjectUrl>
+    <PackageTags>tusk;logistics;api;sdk</PackageTags>
     <PackageReleaseNotes>Minor update</PackageReleaseNotes>
     <Nullable>annotations</Nullable>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
