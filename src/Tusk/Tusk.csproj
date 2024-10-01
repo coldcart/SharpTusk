@@ -13,7 +13,7 @@
     <Description>Tusk SDK Client for .NET</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>Tusk</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>$(PackageVersion)</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Tusk.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/coldcart/TuskCSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -21,6 +21,7 @@
     <PackageProjectUrl>https://github.com/coldcart/TuskCSharp</PackageProjectUrl>
     <PackageTags>tusk;logistics;api;sdk</PackageTags>
     <PackageReleaseNotes>Minor update</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Nullable>annotations</Nullable>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
@@ -34,4 +35,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
   </ItemGroup>
+  <ItemGroup>
+     <None Include="../../README.md" Pack="true" PackagePath="\"/>
+   </ItemGroup>
 </Project>
