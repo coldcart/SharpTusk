@@ -1,0 +1,1459 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: devsupport@tusklogistics.com
+  title: Tusk Logistics API
+  version: "1.0"
+externalDocs:
+  description: Find out more about Tusk
+  url: https://www.tusklogistics.com/
+servers:
+- description: Sandbox server (uses test data)
+  url: https://apisandbox.tusklogistics.com
+- description: Production server (uses live data)
+  url: https://api.tusklogistics.com
+security:
+- ApiKeyAuth: []
+tags:
+- description: A Shipment is a physical package which can be or has been shipped and
+    can be tracked
+  name: Shipments
+- description: A Label is the shipping label which is purchased and placed on a Shipment
+  name: Labels
+- description: A Rate defines the cost and speed with which a Shipment can reach its
+    destination
+  name: Rates
+- name: Tracking
+- description: ""
+  name: Locations
+- description: ""
+  name: Manifest
+paths:
+  /v1/shipment/{shipment_id}:
+    get:
+      deprecated: false
+      description: Returns a single Shipment
+      operationId: GetaShipmentbyID
+      parameters:
+      - description: ID of Shipment to return
+        explode: false
+        in: path
+        name: shipment_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get a Shipment by ID
+      tags:
+      - Shipments
+  /v1/labels:
+    post:
+      deprecated: false
+      description: "Purchase Labels. This will also create the Shipment provided.\
+        \ The number of labels purchased will match the number of parcels provided\
+        \ in the shipment.  At this time, there is only one service, \"Tusk Ground\"\
+        . This endpoint will purchase Label(s) for that service."
+      operationId: PurchaseLabels
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1LabelsRequest'
+        description: ""
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentPurchaseResponse'
+          description: Resource created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Bad Request
+        "401":
+          content: {}
+          description: Unauthorized
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unprocessable Entity
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Purchase Labels
+      tags:
+      - Labels
+  /v1/label/{label_id}:
+    get:
+      deprecated: false
+      description: Returns information about a Label
+      operationId: GetaLabelbyID
+      parameters:
+      - description: ID of Label to return
+        explode: false
+        in: path
+        name: label_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get a Label by ID
+      tags:
+      - Labels
+  /v1/label/{label_id}/void:
+    post:
+      deprecated: false
+      description: "Void the Label, setting its status to CANCELLED, ensuring it will\
+        \ not be charged. Only Labels in CREATED status can be voided."
+      operationId: VoidaLabel
+      parameters:
+      - description: ID of the Label to void.
+        explode: false
+        in: path
+        name: label_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Void a Label
+      tags:
+      - Labels
+  /v1/rate/check:
+    post:
+      deprecated: false
+      description: Returns a list of objects containing rate information for a simplified
+        Shipment request.
+      operationId: CheckRates
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1RateCheckRequest'
+        description: ""
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                description: ""
+                items:
+                  $ref: '#/components/schemas/RateCheck'
+                type: array
+          description: Resource Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Bad Request
+        "401":
+          content: {}
+          description: Unauthorized
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unprocessable Entity
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Check Rates
+      tags:
+      - Rates
+  /v1/tracking/{tracking_number}:
+    get:
+      deprecated: false
+      description: Get the tracking history for an entire Shipment
+      operationId: GetShipmentTracking
+      parameters:
+      - description: Tracking number for the Shipment
+        explode: false
+        in: path
+        name: tracking_number
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingShipment'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get Shipment Tracking
+      tags:
+      - Tracking
+  /v1/tracking/label/{label_id}:
+    get:
+      deprecated: false
+      description: Get the latest status and location
+      operationId: GetLabelTrackingStatus
+      parameters:
+      - description: LabelID to return tracking for
+        explode: false
+        in: path
+        name: label_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingLabel'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get Label Tracking Status
+      tags:
+      - Tracking
+  /v1/tracking/label/{label_id}/history:
+    get:
+      deprecated: false
+      description: Get the full tracking history for a label
+      operationId: GetLabelTrackingHistory
+      parameters:
+      - description: LabelID to return tracking for
+        explode: false
+        in: path
+        name: label_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1TrackingLabelHistoryResponse'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get Label Tracking History
+      tags:
+      - Tracking
+  /v1/location:
+    get:
+      deprecated: false
+      description: Returns list of Locations for the account from which Shipments
+        can be created
+      operationId: GetallshipfromLocations
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                description: Location from which this account can create a Shipment.
+                items:
+                  $ref: '#/components/schemas/Location'
+                type: array
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get all ship from Locations
+      tags:
+      - Locations
+  /v1/manifest/create:
+    post:
+      deprecated: false
+      description: Create manifest for a location with or without labels.
+      operationId: CreateaManifest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1ManifestCreateRequest'
+        description: ""
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestOperationResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Bad Request
+        "401":
+          content: {}
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Create a Manifest
+      tags:
+      - Manifest
+  /v1/manifest/{manifest_id}:
+    get:
+      deprecated: false
+      description: Create manifest for a location with or without labels.
+      operationId: GetaManifestbyID
+      parameters:
+      - description: ID of Manifest to return
+        explode: false
+        in: path
+        name: manifest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manifest'
+          description: Success
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Get a Manifest by ID
+      tags:
+      - Manifest
+  /v1/manifest/{manifest_id}/addlabels:
+    post:
+      deprecated: false
+      description: Add labels to an existing manifest
+      operationId: AddLabelstoManifest
+      parameters:
+      - description: ID of Manifest to operate
+        explode: false
+        in: path
+        name: manifest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1ManifestAddlabelsRequest'
+        description: ""
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestOperationResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Bad Request
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Add Labels to Manifest
+      tags:
+      - Manifest
+  /v1/manifest/{manifest_id}/removelabels:
+    post:
+      deprecated: false
+      description: Remove labels to an existing manifest
+      operationId: RemoveLabelsfromManifest
+      parameters:
+      - description: ID of Manifest to operate
+        explode: false
+        in: path
+        name: manifest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1ManifestRemovelabelsRequest'
+        description: ""
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestOperationResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Bad Request
+        "401":
+          content: {}
+          description: Unauthorized
+        "404":
+          content: {}
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Internal Server Error
+      summary: Remove Labels from Manifest
+      tags:
+      - Manifest
+components:
+  schemas:
+    CreateShipment:
+      example:
+        external_reference: external_reference
+        address_to:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        confirmation: confirmation
+        address_from:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        parcels:
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+      properties:
+        external_reference:
+          description: Optional field for providing an identifier of the shipment.
+            This can help identify shipments faster in case of a support issue. This
+            field is limited to 50 characters and no validation of any data is performed
+            on this.
+          type: string
+        confirmation:
+          description: "Request confirmation for this shipment. Options are: NONE,\
+            \ SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge\
+            \ might apply."
+          type: string
+        address_to:
+          $ref: '#/components/schemas/Address'
+        address_from:
+          $ref: '#/components/schemas/Address'
+        parcels:
+          description: Parcels sent as part of this Shipment.
+          items:
+            $ref: '#/components/schemas/Parcel'
+          type: array
+      required:
+      - address_from
+      - address_to
+      - parcels
+      title: CreateShipment
+    Shipment:
+      example:
+        external_reference: external_reference
+        address_to:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        id: 0
+        confirmation: confirmation
+        address_from:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        parcels:
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+      properties:
+        id:
+          description: ID of the Shipment.
+          type: integer
+        external_reference:
+          description: Optional field for providing an identifier of the shipment.
+            This can help identify shipments faster in case of a support issue. This
+            field is limited to 50 characters and no validation of any data is performed
+            on this.
+          type: string
+        confirmation:
+          description: "Confirmation requested for this shipment. Options are: NONE,\
+            \ SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge\
+            \ might apply."
+          type: string
+        address_to:
+          $ref: '#/components/schemas/Address'
+        address_from:
+          $ref: '#/components/schemas/Address'
+        parcels:
+          description: Parcels sent as part of this Shipment.
+          items:
+            $ref: '#/components/schemas/Parcel'
+          type: array
+      title: Shipment
+    Label:
+      example:
+        cost: 5.962133916683182
+        rate_id: 1
+        label_format: label_format
+        id: 0
+        shipment_id: 6
+        tracking_url: tracking_url
+        label_url: label_url
+      properties:
+        id:
+          description: ID of the Label.
+          type: integer
+        shipment_id:
+          description: The Shipment which is shipped by this Label.
+          type: integer
+        rate_id:
+          description: The Rate which was used to create this Label.
+          type: integer
+        label_url:
+          description: URL to fetch the Label to print.
+          type: string
+        cost:
+          description: Purchase price of the Label.
+          type: number
+        tracking_url:
+          description: URL to a tracking page for this Label.
+          type: string
+        label_format:
+          description: "Format of labels to be returned from this purchase. Options\
+            \ are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified."
+          type: string
+      title: Label
+    Location:
+      example:
+        city: city
+        name: name
+        street1: street1
+        id: 0
+        street2: street2
+        state: state
+        postal_code: postal_code
+      properties:
+        id:
+          description: ID of the Location.
+          type: integer
+        name:
+          description: Name of the Location
+          type: string
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+      title: Location
+    Parcel:
+      example:
+        weight:
+          unit: unit
+          value: 5.637376656633329
+        dimensions:
+          length: 6.027456183070403
+          width: 1.4658129805029452
+          height: 5.962133916683182
+      properties:
+        dimensions:
+          $ref: '#/components/schemas/Parcel_dimensions'
+        weight:
+          $ref: '#/components/schemas/Parcel_weight'
+      required:
+      - dimensions
+      - weight
+      title: Parcel
+    Address:
+      example:
+        country: country
+        city: city
+        phone: phone
+        name: name
+        is_residential: true
+        company: company
+        street1: street1
+        street2: street2
+        state: state
+        postal_code: postal_code
+        email: email
+      properties:
+        name:
+          description: Contact person at this address.
+          type: string
+        company:
+          description: Company name for this address. Required if Is_Residential is
+            false.
+          type: string
+        is_residential:
+          description: "Flag indicating whether the address is residential. If omitted,\
+            \ it is assumed to be true."
+          type: boolean
+        street1:
+          description: First line of the street address.
+          type: string
+        street2:
+          description: Second line of the street address. May not be needed.
+          type: string
+        city:
+          description: Name of the city.
+          type: string
+        state:
+          description: 2-letter abbreviation of the state.
+          type: string
+        country:
+          description: 2-letter country code. Tusk currently only supports US addresses.
+          type: string
+        postal_code:
+          description: Postal code.
+          type: string
+        phone:
+          description: Phone number of the contact person at this address.
+          type: string
+        email:
+          description: Email of the contact person at this address.
+          type: string
+      required:
+      - city
+      - postal_code
+      - state
+      - street1
+      title: Address
+    RateCheck:
+      example:
+        delivery:
+          estimated_time_in_transit_days: 1.4658129805029452
+          service_ship_speed_days: 6.027456183070403
+          notes:
+          - notes
+          - notes
+          estimated_delivery_date: estimated_delivery_date
+        cost: 0.8008281904610115
+        service: service
+      properties:
+        cost:
+          description: Cost to purchase a Label for this Rate.
+          type: number
+        service:
+          description: Service level name for this Rate.
+          type: string
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+      title: RateCheck
+    TrackingLabel:
+      example:
+        event_date: event_date
+        location:
+          city: city
+          state: state
+          postal_code: postal_code
+        delivery_eta: delivery_eta
+        status: status
+      properties:
+        location:
+          $ref: '#/components/schemas/TrackingLabel_location'
+        status:
+          description: "Status of the Shipment at the time of the tracking event_date.\
+            \ Possible values are: CREATED, RECEIVED_BY_CARRIER, IN_TRANSIT, OUT_FOR_DELIVERY,\
+            \ DELIVERY_FAILURE, DELIVERED, CANCELLED, UNKNOWN"
+          type: string
+        event_date:
+          description: Timestamp at which the tracking event occurred.
+          type: string
+        delivery_eta:
+          description: Estimated delivery time at the time of the tracking event_date.
+          type: string
+      title: TrackingLabel
+    TrackingLabelHistory:
+      example:
+        event_date: event_date
+        location:
+          city: city
+          state: state
+          postal_code: postal_code
+        status: status
+      properties:
+        location:
+          $ref: '#/components/schemas/TrackingLabel_location'
+        status:
+          description: "Status of the Shipment at the time of the tracking event_date.\
+            \ Possible values are: CREATED, RECEIVED_BY_CARRIER, IN_TRANSIT, OUT_FOR_DELIVERY,\
+            \ DELIVERY_FAILURE, DELIVERED, CANCELLED, UNKNOWN"
+          type: string
+        event_date:
+          description: Timestamp at which the tracking event occurred.
+          type: string
+      title: TrackingLabelHistory
+    TrackingShipment:
+      example:
+        tracking_number: tracking_number
+        shipment_id: 0
+        labels:
+        - final_mile_carrier_tracking_number: final_mile_carrier_tracking_number
+          final_mile_carrier: final_mile_carrier
+          tracking_events:
+          - event_date: event_date
+            location:
+              city: city
+              state: state
+              postal_code: postal_code
+            status: status
+            status_detail: status_detail
+          - event_date: event_date
+            location:
+              city: city
+              state: state
+              postal_code: postal_code
+            status: status
+            status_detail: status_detail
+          estimated_delivery_date: estimated_delivery_date
+          label_id: 6
+        - final_mile_carrier_tracking_number: final_mile_carrier_tracking_number
+          final_mile_carrier: final_mile_carrier
+          tracking_events:
+          - event_date: event_date
+            location:
+              city: city
+              state: state
+              postal_code: postal_code
+            status: status
+            status_detail: status_detail
+          - event_date: event_date
+            location:
+              city: city
+              state: state
+              postal_code: postal_code
+            status: status
+            status_detail: status_detail
+          estimated_delivery_date: estimated_delivery_date
+          label_id: 6
+      properties:
+        shipment_id:
+          type: integer
+        tracking_number:
+          type: string
+        labels:
+          description: ""
+          items:
+            $ref: '#/components/schemas/TrackingShipmentLabel'
+          type: array
+      title: TrackingShipment
+    ShipmentPurchaseResponse:
+      example:
+        rate_id: 6
+        shipment_id: 0
+        shipment_tracking_number: shipment_tracking_number
+        labels:
+        - cost: 5.962133916683182
+          tracking_number: tracking_number
+          id: 1
+          tracking_url: tracking_url
+          label_url: label_url
+        - cost: 5.962133916683182
+          tracking_number: tracking_number
+          id: 1
+          tracking_url: tracking_url
+          label_url: label_url
+      properties:
+        shipment_id:
+          description: The identifier of this Shipment.
+          type: integer
+        rate_id:
+          description: The Rate which was used to create Labels for this Shipment.
+          type: integer
+        shipment_tracking_number:
+          description: The Tusk tracking number used to track this Shipment.
+          type: string
+        labels:
+          description: ""
+          items:
+            $ref: '#/components/schemas/ShipmentLabel'
+          type: array
+      title: ShipmentPurchaseResponse
+    Manifest:
+      example:
+        manifest_document: manifest_document
+        manifest_id: 0
+        address_from:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        labels:
+        - shipment_tracking_number: shipment_tracking_number
+          label_id: 6
+        - shipment_tracking_number: shipment_tracking_number
+          label_id: 6
+      properties:
+        manifest_id:
+          description: The identifier of this Manifest.
+          type: integer
+        address_from:
+          $ref: '#/components/schemas/Address'
+        labels:
+          description: ""
+          items:
+            $ref: '#/components/schemas/ManifestLabel'
+          type: array
+        manifest_document:
+          description: Base 64 string of the Manifest document in PDF format.
+          type: string
+      title: Manifest
+    ManifestOperationResponse:
+      example:
+        manifest_id: 0
+        exceptions:
+        - label_id: 6
+          exception_message: exception_message
+        - label_id: 6
+          exception_message: exception_message
+      properties:
+        manifest_id:
+          description: The identifier of this Manifest.
+          type: integer
+        exceptions:
+          description: ""
+          items:
+            $ref: '#/components/schemas/ManifestException'
+          type: array
+      title: ManifestOperationResponse
+    APIError:
+      example:
+        type: type
+        title: title
+        errors: "{}"
+        status: 2.3021358869347655
+      properties:
+        errors:
+          description: Further information about the error which has occurred.
+          type: object
+        type:
+          type: string
+        title:
+          description: The error which has occurred.
+          type: string
+        status:
+          description: Status code of the response.
+          type: number
+      title: APIError
+    Delivery:
+      example:
+        estimated_time_in_transit_days: 1.4658129805029452
+        service_ship_speed_days: 6.027456183070403
+        notes:
+        - notes
+        - notes
+        estimated_delivery_date: estimated_delivery_date
+      properties:
+        service_ship_speed_days:
+          description: "Shipping speed, in days, of the service. For example, next-day\
+            \ service will be 1. Two-day service will be 2."
+          type: number
+        estimated_time_in_transit_days:
+          description: "Number of calendar days it is expected to take for the parcel\
+            \ to reach its destination, once the carrier has taken possession of it."
+          type: number
+        estimated_delivery_date:
+          description: "Estimated delivery date, in the timezone of delivery. This\
+            \ will be null if no ship_date provided in the request."
+          type: string
+        notes:
+          description: Notes about the delivery service.
+          items:
+            type: string
+          type: array
+      title: Delivery
+    Dimensions:
+      description: Package dimensions.
+      properties:
+        length:
+          description: Length in inches.
+          type: number
+        width:
+          description: Width in inches.
+          type: number
+        height:
+          description: Height in inches.
+          type: number
+      required:
+      - height
+      - length
+      - width
+      title: Dimensions
+    ManifestException:
+      example:
+        label_id: 6
+        exception_message: exception_message
+      properties:
+        label_id:
+          description: Id of the label not added to manifest.
+          type: integer
+        exception_message:
+          description: Unable to add label to manifest reason.
+          type: string
+      title: ManifestException
+    TrackingShipmentLabel:
+      example:
+        final_mile_carrier_tracking_number: final_mile_carrier_tracking_number
+        final_mile_carrier: final_mile_carrier
+        tracking_events:
+        - event_date: event_date
+          location:
+            city: city
+            state: state
+            postal_code: postal_code
+          status: status
+          status_detail: status_detail
+        - event_date: event_date
+          location:
+            city: city
+            state: state
+            postal_code: postal_code
+          status: status
+          status_detail: status_detail
+        estimated_delivery_date: estimated_delivery_date
+        label_id: 6
+      properties:
+        label_id:
+          type: integer
+        final_mile_carrier:
+          type: string
+        final_mile_carrier_tracking_number:
+          type: string
+        estimated_delivery_date:
+          description: Estimated delivery date. Null when an estimate cannot be determined
+            or is not applicable.
+          nullable: true
+          type: string
+        tracking_events:
+          description: ""
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
+          type: array
+      title: TrackingShipmentLabel
+    ShipmentLabel:
+      example:
+        cost: 5.962133916683182
+        tracking_number: tracking_number
+        id: 1
+        tracking_url: tracking_url
+        label_url: label_url
+      properties:
+        id:
+          description: The identifier of this Label.
+          type: integer
+        cost:
+          description: Purchase price of the Label.
+          type: number
+        tracking_number:
+          description: "The Tusk tracking number used to track this Label specifically,\
+            \ instead of the full Shipment it is a part of."
+          type: string
+        tracking_url:
+          description: URL to a tracking page for this Label.
+          type: string
+        label_url:
+          description: URL to a label PDF for this Label.
+          type: string
+      title: ShipmentLabel
+    ManifestLabel:
+      example:
+        shipment_tracking_number: shipment_tracking_number
+        label_id: 6
+      properties:
+        label_id:
+          description: Id of the label in the manifest.
+          type: integer
+        shipment_tracking_number:
+          description: The unique tracking number used for tracking this Shipment.
+          type: string
+      title: ManifestLabel
+    TrackingLocation:
+      description: Location of the tracking event.
+      properties:
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+      title: TrackingLocation
+    TrackingEvent:
+      example:
+        event_date: event_date
+        location:
+          city: city
+          state: state
+          postal_code: postal_code
+        status: status
+        status_detail: status_detail
+      properties:
+        location:
+          $ref: '#/components/schemas/TrackingLabel_location'
+        status:
+          description: "Status of the Shipment at the time of the tracking event_date.\
+            \ Possible values are: CREATED, RECEIVED_BY_CARRIER, IN_TRANSIT, OUT_FOR_DELIVERY,\
+            \ DELIVERY_FAILURE, DELIVERED, CANCELLED, UNKNOWN"
+          type: string
+        event_date:
+          description: Timestamp at which the tracking event occurred.
+          type: string
+        status_detail:
+          description: Extended status detail of the shipment tracking event.
+          type: string
+      title: TrackingEvent
+    V1LabelsRequest:
+      example:
+        shipment:
+          external_reference: external_reference
+          address_to:
+            country: country
+            city: city
+            phone: phone
+            name: name
+            is_residential: true
+            company: company
+            street1: street1
+            street2: street2
+            state: state
+            postal_code: postal_code
+            email: email
+          confirmation: confirmation
+          address_from:
+            country: country
+            city: city
+            phone: phone
+            name: name
+            is_residential: true
+            company: company
+            street1: street1
+            street2: street2
+            state: state
+            postal_code: postal_code
+            email: email
+          parcels:
+          - weight:
+              unit: unit
+              value: 5.637376656633329
+            dimensions:
+              length: 6.027456183070403
+              width: 1.4658129805029452
+              height: 5.962133916683182
+          - weight:
+              unit: unit
+              value: 5.637376656633329
+            dimensions:
+              length: 6.027456183070403
+              width: 1.4658129805029452
+              height: 5.962133916683182
+        label_format: label_format
+      properties:
+        label_format:
+          description: "Format of labels to be returned from this purchase. Options\
+            \ are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified."
+          type: string
+        shipment:
+          $ref: '#/components/schemas/CreateShipment'
+      required:
+      - shipment
+      title: V1LabelsRequest
+    V1ManifestAddlabelsRequest:
+      example:
+        label_ids:
+        - 0
+        - 0
+        shipment_tracking_numbers:
+        - shipment_tracking_numbers
+        - shipment_tracking_numbers
+      properties:
+        label_ids:
+          description: Label Id to add to manifest
+          items:
+            type: integer
+          type: array
+        shipment_tracking_numbers:
+          description: Shipments to add to manifest
+          items:
+            type: string
+          type: array
+      title: V1ManifestAddlabelsRequest
+    V1ManifestCreateRequest:
+      example:
+        label_ids:
+        - 0
+        - 0
+        shipment_tracking_numbers:
+        - shipment_tracking_numbers
+        - shipment_tracking_numbers
+        address_from:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+      properties:
+        label_ids:
+          description: Label Id to be added to manifest
+          items:
+            type: integer
+          type: array
+        shipment_tracking_numbers:
+          description: Shipments to be added to manifest
+          items:
+            type: string
+          type: array
+        address_from:
+          $ref: '#/components/schemas/Address'
+      required:
+      - address_from
+      title: V1ManifestCreateRequest
+    V1ManifestRemovelabelsRequest:
+      example:
+        label_ids:
+        - 0
+        - 0
+        shipment_tracking_numbers:
+        - shipment_tracking_numbers
+        - shipment_tracking_numbers
+      properties:
+        label_ids:
+          description: Label Id to remove from manifest
+          items:
+            type: integer
+          type: array
+        shipment_tracking_numbers:
+          description: Shipments to remove to manifest
+          items:
+            type: string
+          type: array
+      title: V1ManifestRemovelabelsRequest
+    V1RateCheckRequest:
+      example:
+        postal_code_to: postal_code_to
+        confirmation: confirmation
+        ship_date: ship_date
+        address_from:
+          country: country
+          city: city
+          phone: phone
+          name: name
+          is_residential: true
+          company: company
+          street1: street1
+          street2: street2
+          state: state
+          postal_code: postal_code
+          email: email
+        parcels:
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+        - weight:
+            unit: unit
+            value: 5.637376656633329
+          dimensions:
+            length: 6.027456183070403
+            width: 1.4658129805029452
+            height: 5.962133916683182
+      properties:
+        confirmation:
+          description: "Request confirmation for this shipment. Options are: NONE,\
+            \ SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge\
+            \ might apply."
+          type: string
+        ship_date:
+          description: Format YYYY-MM-DD. Date the carrier is expected to receive
+            the parcel. Required to get estimated_delivery_date.
+          type: string
+        address_from:
+          $ref: '#/components/schemas/Address'
+        postal_code_to:
+          description: Destination postal code
+          type: string
+        parcels:
+          description: Parcels sent as part of this Shipment.
+          items:
+            $ref: '#/components/schemas/Parcel'
+          type: array
+      required:
+      - address_from
+      - parcels
+      - postal_code_to
+      title: V1RateCheckRequest
+    V1TrackingLabelHistoryResponse:
+      example:
+        tracking_events:
+        - event_date: event_date
+          location:
+            city: city
+            state: state
+            postal_code: postal_code
+          status: status
+        - event_date: event_date
+          location:
+            city: city
+            state: state
+            postal_code: postal_code
+          status: status
+      properties:
+        tracking_events:
+          description: ""
+          items:
+            $ref: '#/components/schemas/TrackingLabelHistory'
+          type: array
+      title: V1TrackingLabelHistoryResponse
+    Weight:
+      description: Package weight.
+      properties:
+        value:
+          description: "Weight amount, in unit specified."
+          type: number
+        unit:
+          description: Unit of weight. Specify "Pound" or "Ounce". Responses from
+            this Api will be in ounces.
+          type: string
+      required:
+      - unit
+      - value
+      title: Weight
+    Parcel_dimensions:
+      allOf:
+      - $ref: '#/components/schemas/Dimensions'
+      - description: Package dimensions.
+      example:
+        length: 6.027456183070403
+        width: 1.4658129805029452
+        height: 5.962133916683182
+    Parcel_weight:
+      allOf:
+      - $ref: '#/components/schemas/Weight'
+      - description: Package weight.
+      example:
+        unit: unit
+        value: 5.637376656633329
+    TrackingLabel_location:
+      allOf:
+      - $ref: '#/components/schemas/TrackingLocation'
+      - description: Location of the tracking event.
+      example:
+        city: city
+        state: state
+        postal_code: postal_code
+  securitySchemes:
+    ApiKeyAuth:
+      description: API key used to authorize requests. Use sJK8lCr7XZzVUYKP2FFZD4VSdU3YZxOCxt1E9QZV
+        to test on Sandbox
+      in: header
+      name: x-api-key
+      type: apiKey
+
