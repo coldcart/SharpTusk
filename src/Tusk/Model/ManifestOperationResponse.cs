@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -37,12 +38,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The identifier of this Manifest.</value>
         [DataMember(Name = "manifest_id", EmitDefaultValue = false)]
+        [JsonPropertyName("manifest_id")]
         public int ManifestId { get; set; }
 
         /// <summary>
         /// Gets or Sets Exceptions
         /// </summary>
         [DataMember(Name = "exceptions", EmitDefaultValue = false)]
+        [JsonPropertyName("exceptions")]
         public List<ManifestException> Exceptions { get; set; }
 
         /// <summary>

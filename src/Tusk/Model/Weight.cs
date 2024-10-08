@@ -48,6 +48,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Weight amount, in unit specified.</value>
         [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("value")]
         public decimal Value { get; set; }
 
         /// <summary>
@@ -55,6 +56,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Unit of weight. Specify \&quot;Pound\&quot; or \&quot;Ounce\&quot;. Responses from this Api will be in ounces.</value>
         [DataMember(Name = "unit", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("unit")]
         public string Unit { get; set; }
 
         /// <summary>

@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -20,6 +21,13 @@ namespace Tusk.Model
     [DataContract(Name = "RateCheck")]
     public partial class RateCheck : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RateCheck" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public RateCheck()
+        {
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="RateCheck" /> class.
         /// </summary>
@@ -38,6 +46,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Cost to purchase a Label for this Rate.</value>
         [DataMember(Name = "cost", EmitDefaultValue = false)]
+        [JsonPropertyName("cost")]
         public decimal Cost { get; set; }
 
         /// <summary>
@@ -45,13 +54,15 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Service level name for this Rate.</value>
         [DataMember(Name = "service", EmitDefaultValue = false)]
-        public string Service { get; set; }
+        [JsonPropertyName("service")]
+        public string? Service { get; set; }
 
         /// <summary>
         /// Gets or Sets Delivery
         /// </summary>
         [DataMember(Name = "delivery", EmitDefaultValue = false)]
-        public Delivery Delivery { get; set; }
+        [JsonPropertyName("delivery")]
+        public Delivery? Delivery { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

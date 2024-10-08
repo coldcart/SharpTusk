@@ -81,6 +81,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Contact person at this address.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
+        [JsonPropertyName("name")]
         public string? Name { get; set; }
 
         /// <summary>
@@ -88,6 +89,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Company name for this address. Required if Is_Residential is false.</value>
         [DataMember(Name = "company", EmitDefaultValue = false)]
+        [JsonPropertyName("company")]
         public string? Company { get; set; }
 
         /// <summary>
@@ -95,6 +97,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Flag indicating whether the address is residential. If omitted, it is assumed to be true.</value>
         [DataMember(Name = "is_residential", EmitDefaultValue = true)]
+        [JsonPropertyName("is_residential")]
         public bool? IsResidential { get; set; } = true;
 
         /// <summary>
@@ -102,6 +105,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>First line of the street address.</value>
         [DataMember(Name = "street1", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("street1")]
         public string? Street1 { get; set; }
 
         /// <summary>
@@ -109,6 +113,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Second line of the street address. May not be needed.</value>
         [DataMember(Name = "street2", EmitDefaultValue = false)]
+        [JsonPropertyName("street2")]
         public string? Street2 { get; set; }
 
         /// <summary>
@@ -116,6 +121,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Name of the city.</value>
         [DataMember(Name = "city", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("city")]
         public string? City { get; set; }
 
         /// <summary>
@@ -123,6 +129,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>2-letter abbreviation of the state.</value>
         [DataMember(Name = "state", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("state")]
         public string? State { get; set; }
 
         /// <summary>
@@ -130,6 +137,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>2-letter country code. Tusk currently only supports US addresses.</value>
         [DataMember(Name = "country", EmitDefaultValue = false)]
+        [JsonPropertyName("country")]
         public string? Country { get; set; }
 
         /// <summary>
@@ -137,6 +145,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Postal code.</value>
         [DataMember(Name = "postal_code", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("postal_code")]
         public string? PostalCode { get; set; }
 
         /// <summary>
@@ -144,6 +153,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Phone number of the contact person at this address.</value>
         [DataMember(Name = "phone", EmitDefaultValue = false)]
+        [JsonPropertyName("phone")]
         public string? Phone { get; set; }
 
         /// <summary>
@@ -151,6 +161,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Email of the contact person at this address.</value>
         [DataMember(Name = "email", EmitDefaultValue = false)]
+        [JsonPropertyName("email")]
         public string? Email { get; set; }
 
         /// <summary>

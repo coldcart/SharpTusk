@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -20,6 +21,13 @@ namespace Tusk.Model
     [DataContract(Name = "TrackingLabelHistory")]
     public partial class TrackingLabelHistory : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingLabelHistory" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public TrackingLabelHistory()
+        {
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackingLabelHistory" /> class.
         /// </summary>
@@ -37,21 +45,24 @@ namespace Tusk.Model
         /// Gets or Sets Location
         /// </summary>
         [DataMember(Name = "location", EmitDefaultValue = false)]
-        public TrackingLabelLocation Location { get; set; }
+        [JsonPropertyName("location")]
+        public TrackingLabelLocation? Location { get; set; }
 
         /// <summary>
         /// Status of the Shipment at the time of the tracking event_date. Possible values are: CREATED, RECEIVED_BY_CARRIER, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERY_FAILURE, DELIVERED, CANCELLED, UNKNOWN
         /// </summary>
         /// <value>Status of the Shipment at the time of the tracking event_date. Possible values are: CREATED, RECEIVED_BY_CARRIER, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERY_FAILURE, DELIVERED, CANCELLED, UNKNOWN</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
-        public string Status { get; set; }
+        [JsonPropertyName("status")]
+        public string? Status { get; set; }
 
         /// <summary>
         /// Timestamp at which the tracking event occurred.
         /// </summary>
         /// <value>Timestamp at which the tracking event occurred.</value>
         [DataMember(Name = "event_date", EmitDefaultValue = false)]
-        public string EventDate { get; set; }
+        [JsonPropertyName("event_date")]
+        public string? EventDate { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

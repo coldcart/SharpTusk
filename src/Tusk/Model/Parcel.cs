@@ -52,12 +52,14 @@ namespace Tusk.Model
         /// Gets or Sets Dimensions
         /// </summary>
         [DataMember(Name = "dimensions", EmitDefaultValue = true)]
+        [JsonPropertyName("dimensions")]
         public ParcelDimensions? Dimensions { get; set; }
 
         /// <summary>
         /// Gets or Sets Weight
         /// </summary>
         [DataMember(Name = "weight", EmitDefaultValue = true)]
+        [JsonPropertyName("weight")]
         public ParcelWeight? Weight { get; set; }
 
         /// <summary>

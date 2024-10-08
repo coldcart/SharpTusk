@@ -65,6 +65,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Optional field for providing an identifier of the shipment. This can help identify shipments faster in case of a support issue. This field is limited to 50 characters and no validation of any data is performed on this.</value>
         [DataMember(Name = "external_reference", EmitDefaultValue = false)]
+        [JsonPropertyName("external_reference")]
         public string? ExternalReference { get; set; }
 
         /// <summary>
@@ -72,18 +73,21 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.</value>
         [DataMember(Name = "confirmation", EmitDefaultValue = false)]
+        [JsonPropertyName("confirmation")]
         public string? Confirmation { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressTo
         /// </summary>
         [DataMember(Name = "address_to", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("address_to")]
         public Address? AddressTo { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("address_from")]
         public Address? AddressFrom { get; set; }
 
         /// <summary>
@@ -91,6 +95,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Parcels sent as part of this Shipment.</value>
         [DataMember(Name = "parcels", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("parcels")]
         public List<Parcel> Parcels { get; set; }
 
         /// <summary>

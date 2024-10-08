@@ -13,11 +13,15 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 using Tusk.Client;
 using Tusk.Api;
+using Tusk.Model;
+
 // uncomment below to import models
 //using Tusk.Model;
 
@@ -36,7 +40,13 @@ namespace Tusk.Test.Api
 
         public LabelsApiTests()
         {
-            instance = new LabelsApi();
+            ReadableConfiguration config = new ReadableConfiguration();
+            config.BasePath = "https://apisandbox.tusklogistics.com";
+            // Configure API key authorization: ApiKeyAuth
+            config.ApiKey.Add("x-api-key", "sJK8lCr7XZzVUYKP2FFZD4VSdU3YZxOCxt1E9QZV");
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            instance = new LabelsApi(httpClient, config, httpClientHandler);
         }
 
         public void Dispose()
@@ -70,11 +80,54 @@ namespace Tusk.Test.Api
         /// Test PurchaseLabels
         /// </summary>
         [Fact]
-        public void PurchaseLabelsTest()
+        public async Task PurchaseLabelsTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
-            //V1LabelsRequest? v1LabelsRequest = null;
-            //var response = instance.PurchaseLabels(v1LabelsRequest);
+            V1LabelsRequest? v1LabelsRequest = new V1LabelsRequest
+            {
+                Shipment = new CreateShipment
+                {
+                    Parcels = new List<Parcel>
+                    {
+                        new Parcel()
+                        {
+                            Dimensions = new ParcelDimensions
+                            {
+                                Height = 10,
+                                Width = 10,
+                                Length = 10,
+                            },
+                            Weight = new ParcelWeight
+                            {
+                                Unit = "Pound",
+                                Value = 10
+                            }
+                        }
+                    },
+                    AddressTo = new Address
+                    {
+                        Name = "Dave",
+                        Street1 = "2127 W Division St",
+                        Street2 = "Apt 2",
+                        City = "Chicago",
+                        State = "IL",
+                        PostalCode = "60622",
+                        Country = "US",
+                        Phone = "773-123-4567",
+                        Email = "david@coldcart.co",
+                    },
+                    AddressFrom = new Address
+                    {
+                        Street1 = "571 Wheeling Rd",
+                        City = "Wheeling",
+                        State = "IL",
+                        PostalCode = "60090",
+                    },
+                    ExternalReference = "1234",
+                    
+                }
+            };
+            var response = await instance.PurchaseLabelsAsync(v1LabelsRequest);
+            await instance.VoidaLabelAsync(response.Labels[0].Id);
             //Assert.IsType<ShipmentPurchaseResponse>(response);
         }
 

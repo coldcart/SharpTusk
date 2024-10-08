@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -41,18 +42,21 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The identifier of this Manifest.</value>
         [DataMember(Name = "manifest_id", EmitDefaultValue = false)]
+        [JsonPropertyName("manifest_id")]
         public int ManifestId { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", EmitDefaultValue = false)]
+        [JsonPropertyName("address_from")]
         public Address AddressFrom { get; set; }
 
         /// <summary>
         /// Gets or Sets Labels
         /// </summary>
         [DataMember(Name = "labels", EmitDefaultValue = false)]
+        [JsonPropertyName("labels")]
         public List<ManifestLabel> Labels { get; set; }
 
         /// <summary>
@@ -60,6 +64,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Base 64 string of the Manifest document in PDF format.</value>
         [DataMember(Name = "manifest_document", EmitDefaultValue = false)]
+        [JsonPropertyName("manifest_document")]
         public string ManifestDocument { get; set; }
 
         /// <summary>

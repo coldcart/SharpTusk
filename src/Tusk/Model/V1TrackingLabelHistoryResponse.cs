@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -34,6 +35,7 @@ namespace Tusk.Model
         /// Gets or Sets TrackingEvents
         /// </summary>
         [DataMember(Name = "tracking_events", EmitDefaultValue = false)]
+        [JsonPropertyName("tracking_events")]
         public List<TrackingLabelHistory> TrackingEvents { get; set; }
 
         /// <summary>

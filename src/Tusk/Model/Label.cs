@@ -53,6 +53,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>ID of the Label.</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The Shipment which is shipped by this Label.</value>
         [DataMember(Name = "shipment_id", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_id")]
         public int ShipmentId { get; set; }
 
         /// <summary>
@@ -67,6 +69,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The Rate which was used to create this Label.</value>
         [DataMember(Name = "rate_id", EmitDefaultValue = false)]
+        [JsonPropertyName("rate_id")]
         public int RateId { get; set; }
 
         /// <summary>
@@ -74,6 +77,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to fetch the Label to print.</value>
         [DataMember(Name = "label_url", EmitDefaultValue = false)]
+        [JsonPropertyName("label_url")]
         public string? LabelUrl { get; set; }
 
         /// <summary>
@@ -81,6 +85,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Purchase price of the Label.</value>
         [DataMember(Name = "cost", EmitDefaultValue = false)]
+        [JsonPropertyName("cost")]
         public decimal Cost { get; set; }
 
         /// <summary>
@@ -88,6 +93,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to a tracking page for this Label.</value>
         [DataMember(Name = "tracking_url", EmitDefaultValue = false)]
+        [JsonPropertyName("tracking_url")]
         public string? TrackingUrl { get; set; }
 
         /// <summary>
@@ -95,6 +101,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.</value>
         [DataMember(Name = "label_format", EmitDefaultValue = false)]
+        [JsonPropertyName("label_format")]
         public string? LabelFormat { get; set; }
 
         /// <summary>

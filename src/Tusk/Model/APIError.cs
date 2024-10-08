@@ -12,6 +12,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -41,12 +42,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Further information about the error which has occurred.</value>
         [DataMember(Name = "errors", EmitDefaultValue = false)]
+        [JsonPropertyName("errors")]
         public Object Errors { get; set; }
 
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name = "type", EmitDefaultValue = false)]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
         /// <summary>
@@ -54,6 +57,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The error which has occurred.</value>
         [DataMember(Name = "title", EmitDefaultValue = false)]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Status code of the response.</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
+        [JsonPropertyName("status")]
         public decimal Status { get; set; }
 
         /// <summary>

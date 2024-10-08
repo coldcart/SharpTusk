@@ -43,6 +43,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Label Id to remove from manifest</value>
         [DataMember(Name = "label_ids", EmitDefaultValue = false)]
+        [JsonPropertyName("label_ids")]
         public List<int>? LabelIds { get; set; }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Shipments to remove to manifest</value>
         [DataMember(Name = "shipment_tracking_numbers", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_tracking_numbers")]
         public List<string>? ShipmentTrackingNumbers { get; set; }
 
         /// <summary>

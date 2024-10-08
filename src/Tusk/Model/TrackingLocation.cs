@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -20,6 +21,13 @@ namespace Tusk.Model
     [DataContract(Name = "TrackingLocation")]
     public partial class TrackingLocation : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingLocation" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public TrackingLocation()
+        {
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackingLocation" /> class.
         /// </summary>
@@ -37,19 +45,22 @@ namespace Tusk.Model
         /// Gets or Sets City
         /// </summary>
         [DataMember(Name = "city", EmitDefaultValue = false)]
-        public string City { get; set; }
+        [JsonPropertyName("city")]
+        public string? City { get; set; }
 
         /// <summary>
         /// Gets or Sets State
         /// </summary>
         [DataMember(Name = "state", EmitDefaultValue = false)]
-        public string State { get; set; }
+        [JsonPropertyName("state")]
+        public string? State { get; set; }
 
         /// <summary>
         /// Gets or Sets PostalCode
         /// </summary>
         [DataMember(Name = "postal_code", EmitDefaultValue = false)]
-        public string PostalCode { get; set; }
+        [JsonPropertyName("postal_code")]
+        public string? PostalCode { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -46,6 +47,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>ID of the Location.</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         /// <summary>
@@ -53,36 +55,42 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Name of the Location</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets Street1
         /// </summary>
         [DataMember(Name = "street1", EmitDefaultValue = false)]
+        [JsonPropertyName("street1")]
         public string Street1 { get; set; }
 
         /// <summary>
         /// Gets or Sets Street2
         /// </summary>
         [DataMember(Name = "street2", EmitDefaultValue = false)]
+        [JsonPropertyName("street2")]
         public string Street2 { get; set; }
 
         /// <summary>
         /// Gets or Sets City
         /// </summary>
         [DataMember(Name = "city", EmitDefaultValue = false)]
+        [JsonPropertyName("city")]
         public string City { get; set; }
 
         /// <summary>
         /// Gets or Sets State
         /// </summary>
         [DataMember(Name = "state", EmitDefaultValue = false)]
+        [JsonPropertyName("state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets or Sets PostalCode
         /// </summary>
         [DataMember(Name = "postal_code", EmitDefaultValue = false)]
+        [JsonPropertyName("postal_code")]
         public string PostalCode { get; set; }
 
         /// <summary>

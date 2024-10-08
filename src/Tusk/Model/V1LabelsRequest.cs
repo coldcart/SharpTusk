@@ -61,6 +61,7 @@ namespace Tusk.Model
         /// </value>
         /// </summary>
         [DataMember(Name = "final_mile_carrier", EmitDefaultValue = false)]
+        [JsonPropertyName("final_mile_carrier")]
         public string? FinalMileCarrier { get; set; }
 
         /// <summary>
@@ -68,12 +69,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.</value>
         [DataMember(Name = "label_format", EmitDefaultValue = false)]
+        [JsonPropertyName("label_format")]
         public string? LabelFormat { get; set; }
 
         /// <summary>
         /// Gets or Sets Shipment
         /// </summary>
         [DataMember(Name = "shipment", EmitDefaultValue = true)]
+        [JsonPropertyName("shipment")]
         public CreateShipment? Shipment { get; set; }
 
         /// <summary>

@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -21,6 +22,13 @@ namespace Tusk.Model
     [DataContract(Name = "TrackingShipmentLabel")]
     public partial class TrackingShipmentLabel : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingShipmentLabel" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public TrackingShipmentLabel()
+        {
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackingShipmentLabel" /> class.
         /// </summary>
@@ -42,32 +50,37 @@ namespace Tusk.Model
         /// Gets or Sets LabelId
         /// </summary>
         [DataMember(Name = "label_id", EmitDefaultValue = false)]
+        [JsonPropertyName("label_id")]
         public int LabelId { get; set; }
 
         /// <summary>
         /// Gets or Sets FinalMileCarrier
         /// </summary>
         [DataMember(Name = "final_mile_carrier", EmitDefaultValue = false)]
-        public string FinalMileCarrier { get; set; }
+        [JsonPropertyName("final_mile_carrier")]
+        public string? FinalMileCarrier { get; set; }
 
         /// <summary>
         /// Gets or Sets FinalMileCarrierTrackingNumber
         /// </summary>
         [DataMember(Name = "final_mile_carrier_tracking_number", EmitDefaultValue = false)]
-        public string FinalMileCarrierTrackingNumber { get; set; }
+        [JsonPropertyName("final_mile_carrier_tracking_number")]
+        public string? FinalMileCarrierTrackingNumber { get; set; }
 
         /// <summary>
         /// Estimated delivery date. Null when an estimate cannot be determined or is not applicable.
         /// </summary>
         /// <value>Estimated delivery date. Null when an estimate cannot be determined or is not applicable.</value>
         [DataMember(Name = "estimated_delivery_date", EmitDefaultValue = true)]
-        public string EstimatedDeliveryDate { get; set; }
+        [JsonPropertyName("estimated_delivery_date")]
+        public string? EstimatedDeliveryDate { get; set; }
 
         /// <summary>
         /// Gets or Sets TrackingEvents
         /// </summary>
         [DataMember(Name = "tracking_events", EmitDefaultValue = false)]
-        public List<TrackingEvent> TrackingEvents { get; set; }
+        [JsonPropertyName("tracking_events")]
+        public List<TrackingEvent>? TrackingEvents { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

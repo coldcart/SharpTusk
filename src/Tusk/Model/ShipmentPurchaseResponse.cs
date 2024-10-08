@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -41,6 +42,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The identifier of this Shipment.</value>
         [DataMember(Name = "shipment_id", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_id")]
         public int ShipmentId { get; set; }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The Rate which was used to create Labels for this Shipment.</value>
         [DataMember(Name = "rate_id", EmitDefaultValue = false)]
+        [JsonPropertyName("rate_id")]
         public int RateId { get; set; }
 
         /// <summary>
@@ -55,12 +58,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The Tusk tracking number used to track this Shipment.</value>
         [DataMember(Name = "shipment_tracking_number", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_tracking_number")]
         public string ShipmentTrackingNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets Labels
         /// </summary>
         [DataMember(Name = "labels", EmitDefaultValue = false)]
+        [JsonPropertyName("labels")]
         public List<ShipmentLabel> Labels { get; set; }
 
         /// <summary>

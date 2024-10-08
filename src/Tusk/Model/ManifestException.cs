@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -36,6 +37,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Id of the label not added to manifest.</value>
         [DataMember(Name = "label_id", EmitDefaultValue = false)]
+        [JsonPropertyName("label_id")]
         public int LabelId { get; set; }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Unable to add label to manifest reason.</value>
         [DataMember(Name = "exception_message", EmitDefaultValue = false)]
+        [JsonPropertyName("exception_message")]
         public string ExceptionMessage { get; set; }
 
         /// <summary>

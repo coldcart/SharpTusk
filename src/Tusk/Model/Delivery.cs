@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -41,6 +42,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Shipping speed, in days, of the service. For example, next-day service will be 1. Two-day service will be 2.</value>
         [DataMember(Name = "service_ship_speed_days", EmitDefaultValue = false)]
+        [JsonPropertyName("service_ship_speed_days")]
         public decimal ServiceShipSpeedDays { get; set; }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Number of calendar days it is expected to take for the parcel to reach its destination, once the carrier has taken possession of it.</value>
         [DataMember(Name = "estimated_time_in_transit_days", EmitDefaultValue = false)]
+        [JsonPropertyName("estimated_time_in_transit_days")]
         public decimal EstimatedTimeInTransitDays { get; set; }
 
         /// <summary>
@@ -55,6 +58,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Estimated delivery date, in the timezone of delivery. This will be null if no ship_date provided in the request.</value>
         [DataMember(Name = "estimated_delivery_date", EmitDefaultValue = false)]
+        [JsonPropertyName("estimated_delivery_date")]
         public string EstimatedDeliveryDate { get; set; }
 
         /// <summary>
@@ -62,6 +66,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Notes about the delivery service.</value>
         [DataMember(Name = "notes", EmitDefaultValue = false)]
+        [JsonPropertyName("notes")]
         public List<string> Notes { get; set; }
 
         /// <summary>

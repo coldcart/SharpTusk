@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -36,6 +37,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Id of the label in the manifest.</value>
         [DataMember(Name = "label_id", EmitDefaultValue = false)]
+        [JsonPropertyName("label_id")]
         public int LabelId { get; set; }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The unique tracking number used for tracking this Shipment.</value>
         [DataMember(Name = "shipment_tracking_number", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_tracking_number")]
         public string ShipmentTrackingNumber { get; set; }
 
         /// <summary>

@@ -51,6 +51,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Label Id to be added to manifest</value>
         [DataMember(Name = "label_ids", EmitDefaultValue = false)]
+        [JsonPropertyName("label_ids")]
         public List<int>? LabelIds { get; set; }
 
         /// <summary>
@@ -58,12 +59,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Shipments to be added to manifest</value>
         [DataMember(Name = "shipment_tracking_numbers", EmitDefaultValue = false)]
+        [JsonPropertyName("shipment_tracking_numbers")]
         public List<string>? ShipmentTrackingNumbers { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("address_from")]
         public Address? AddressFrom { get; set; }
 
         /// <summary>

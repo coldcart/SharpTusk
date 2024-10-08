@@ -44,6 +44,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Length in inches.</value>
         [DataMember(Name = "length", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("length")]
         public decimal Length { get; set; }
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Width in inches.</value>
         [DataMember(Name = "width", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("width")]
         public decimal Width { get; set; }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Height in inches.</value>
         [DataMember(Name = "height", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("height")]
         public decimal Height { get; set; }
 
         /// <summary>

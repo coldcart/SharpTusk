@@ -157,6 +157,10 @@ namespace Tusk.Client
 
             try
             {
+                if (response.IsSuccessStatusCode && response.Content.Headers.ContentLength == 0)
+                {
+                    return new {};
+                }
                 return JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync().ConfigureAwait(false),
                     type, _serializerSettings) ?? throw new InvalidOperationException();
             }
@@ -541,6 +545,7 @@ namespace Tusk.Client
                     return await ToApiResponse<T>(response, default(T), req.RequestUri).ConfigureAwait(false);
                 }
 
+                
                 object responseData = await deserializer.Deserialize<T>(response).ConfigureAwait(false);
 
                 // if the response type is oneOf/anyOf, call FromJSON to deserialize the data

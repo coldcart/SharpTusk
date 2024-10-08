@@ -78,6 +78,7 @@ namespace Tusk.Model
         /// </value>
         /// </summary>
         [DataMember(Name = "final_mile_carrier", EmitDefaultValue = false)]
+        [JsonPropertyName("final_mile_carrier")]
         public string? FinalMileCarrier { get; set; }
 
         /// <summary>
@@ -85,6 +86,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.</value>
         [DataMember(Name = "confirmation", EmitDefaultValue = false)]
+        [JsonPropertyName("confirmation")]
         public string? Confirmation { get; set; }
 
         /// <summary>
@@ -92,12 +94,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Format YYYY-MM-DD. Date the carrier is expected to receive the parcel. Required to get estimated_delivery_date.</value>
         [DataMember(Name = "ship_date", EmitDefaultValue = false)]
+        [JsonPropertyName("ship_date")]
         public string? ShipDate { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("address_from")]
         public Address? AddressFrom { get; set; }
 
         /// <summary>
@@ -105,6 +109,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Destination postal code</value>
         [DataMember(Name = "postal_code_to", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("postal_code_to")]
         public string? PostalCodeTo { get; set; }
 
         /// <summary>
@@ -112,6 +117,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Parcels sent as part of this Shipment.</value>
         [DataMember(Name = "parcels", IsRequired = true, EmitDefaultValue = true)]
+        [JsonPropertyName("parcels")]
         public List<Parcel>? Parcels { get; set; }
 
         /// <summary>

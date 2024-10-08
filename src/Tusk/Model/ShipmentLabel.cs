@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -42,6 +43,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The identifier of this Label.</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         /// <summary>
@@ -49,6 +51,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Purchase price of the Label.</value>
         [DataMember(Name = "cost", EmitDefaultValue = false)]
+        [JsonPropertyName("cost")]
         public decimal Cost { get; set; }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>The Tusk tracking number used to track this Label specifically, instead of the full Shipment it is a part of.</value>
         [DataMember(Name = "tracking_number", EmitDefaultValue = false)]
+        [JsonPropertyName("tracking_number")]
         public string TrackingNumber { get; set; }
 
         /// <summary>
@@ -63,6 +67,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to a tracking page for this Label.</value>
         [DataMember(Name = "tracking_url", EmitDefaultValue = false)]
+        [JsonPropertyName("tracking_url")]
         public string TrackingUrl { get; set; }
 
         /// <summary>
@@ -70,6 +75,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to a label PDF for this Label.</value>
         [DataMember(Name = "label_url", EmitDefaultValue = false)]
+        [JsonPropertyName("label_url")]
         public string LabelUrl { get; set; }
 
         /// <summary>

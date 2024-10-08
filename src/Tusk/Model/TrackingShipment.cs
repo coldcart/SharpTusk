@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -24,33 +25,61 @@ namespace Tusk.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackingShipment" /> class.
         /// </summary>
+        [JsonConstructor]
+        public TrackingShipment()
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingShipment" /> class.
+        /// </summary>
         /// <param name="shipmentId">shipmentId.</param>
         /// <param name="trackingNumber">trackingNumber.</param>
         /// <param name="labels">labels.</param>
-        public TrackingShipment(int shipmentId = default(int), string trackingNumber = default(string), List<TrackingShipmentLabel> labels = default(List<TrackingShipmentLabel>))
+        /// <param name="addressFrom">addressFrom.</param>
+        /// <param name="addressTo">addressTo.</param>
+        public TrackingShipment(int shipmentId = default(int), string trackingNumber = default(string), List<TrackingShipmentLabel> labels = default(List<TrackingShipmentLabel>), TrackingLocation addressFrom = default(TrackingLocation), TrackingLocation addressTo = default(TrackingLocation))
         {
             this.ShipmentId = shipmentId;
             this.TrackingNumber = trackingNumber;
             this.Labels = labels;
+            this.AddressFrom = addressFrom;
+            this.AddressTo = addressTo;
         }
 
         /// <summary>
         /// Gets or Sets ShipmentId
         /// </summary>
         [DataMember(Name = "shipment_id", EmitDefaultValue = false)]
-        public int ShipmentId { get; set; }
+        [JsonPropertyName("shipment_id")]
+        public int? ShipmentId { get; set; }
 
         /// <summary>
         /// Gets or Sets TrackingNumber
         /// </summary>
         [DataMember(Name = "tracking_number", EmitDefaultValue = false)]
-        public string TrackingNumber { get; set; }
+        [JsonPropertyName("tracking_number")]
+        public string? TrackingNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets Labels
         /// </summary>
         [DataMember(Name = "labels", EmitDefaultValue = false)]
-        public List<TrackingShipmentLabel> Labels { get; set; }
+        [JsonPropertyName("labels")]
+        public List<TrackingShipmentLabel>? Labels { get; set; }
+
+        /// <summary>
+        /// Gets or Sets AddressFrom
+        /// </summary>
+        [DataMember(Name = "address_from", EmitDefaultValue = false)]
+        [JsonPropertyName("address_from")]
+        public TrackingLocation? AddressFrom { get; set; }
+
+        /// <summary>
+        /// Gets or Sets AddressTo
+        /// </summary>
+        [DataMember(Name = "address_to", EmitDefaultValue = false)]
+        [JsonPropertyName("address_to")]
+        public TrackingLocation? AddressTo { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
