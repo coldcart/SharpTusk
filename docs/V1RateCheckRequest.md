@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **AddressFrom** | [**Address**](Address.md) |  | 
 **PostalCodeTo** | **string** | Destination postal code | 
 **Parcels** | [**List&lt;Parcel&gt;**](Parcel.md) | Parcels sent as part of this Shipment. | 
+**FinalMileCarrier** | **string** | The final mile carrier to be used for this purchase. Options are: `cdl`, `gls-us`, `lso`, `uds`, `courier_express`, `optima`, `groscale`, `speedx`, `uniuni` | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
