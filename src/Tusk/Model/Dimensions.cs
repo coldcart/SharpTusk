@@ -25,7 +25,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="Dimensions" /> class.
         /// </summary>
         [JsonConstructor]
-        protected Dimensions() { }
+        public Dimensions() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Dimensions" /> class.
         /// </summary>

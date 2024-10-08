@@ -27,7 +27,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="V1ManifestCreateRequest" /> class.
         /// </summary>
         [JsonConstructor]
-        protected V1ManifestCreateRequest() { }
+        public V1ManifestCreateRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="V1ManifestCreateRequest" /> class.
         /// </summary>
@@ -51,20 +51,20 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Label Id to be added to manifest</value>
         [DataMember(Name = "label_ids", EmitDefaultValue = false)]
-        public List<int> LabelIds { get; set; }
+        public List<int>? LabelIds { get; set; }
 
         /// <summary>
         /// Shipments to be added to manifest
         /// </summary>
         /// <value>Shipments to be added to manifest</value>
         [DataMember(Name = "shipment_tracking_numbers", EmitDefaultValue = false)]
-        public List<string> ShipmentTrackingNumbers { get; set; }
+        public List<string>? ShipmentTrackingNumbers { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
-        public Address AddressFrom { get; set; }
+        public Address? AddressFrom { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -26,7 +26,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="Address" /> class.
         /// </summary>
         [JsonConstructor]
-        protected Address() { }
+        public Address() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Address" /> class.
         /// </summary>
@@ -81,77 +81,77 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Contact person at this address.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Company name for this address. Required if Is_Residential is false.
         /// </summary>
         /// <value>Company name for this address. Required if Is_Residential is false.</value>
         [DataMember(Name = "company", EmitDefaultValue = false)]
-        public string Company { get; set; }
+        public string? Company { get; set; }
 
         /// <summary>
         /// Flag indicating whether the address is residential. If omitted, it is assumed to be true.
         /// </summary>
         /// <value>Flag indicating whether the address is residential. If omitted, it is assumed to be true.</value>
         [DataMember(Name = "is_residential", EmitDefaultValue = true)]
-        public bool IsResidential { get; set; }
+        public bool? IsResidential { get; set; } = true;
 
         /// <summary>
         /// First line of the street address.
         /// </summary>
         /// <value>First line of the street address.</value>
         [DataMember(Name = "street1", IsRequired = true, EmitDefaultValue = true)]
-        public string Street1 { get; set; }
+        public string? Street1 { get; set; }
 
         /// <summary>
         /// Second line of the street address. May not be needed.
         /// </summary>
         /// <value>Second line of the street address. May not be needed.</value>
         [DataMember(Name = "street2", EmitDefaultValue = false)]
-        public string Street2 { get; set; }
+        public string? Street2 { get; set; }
 
         /// <summary>
         /// Name of the city.
         /// </summary>
         /// <value>Name of the city.</value>
         [DataMember(Name = "city", IsRequired = true, EmitDefaultValue = true)]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         /// <summary>
         /// 2-letter abbreviation of the state.
         /// </summary>
         /// <value>2-letter abbreviation of the state.</value>
         [DataMember(Name = "state", IsRequired = true, EmitDefaultValue = true)]
-        public string State { get; set; }
+        public string? State { get; set; }
 
         /// <summary>
         /// 2-letter country code. Tusk currently only supports US addresses.
         /// </summary>
         /// <value>2-letter country code. Tusk currently only supports US addresses.</value>
         [DataMember(Name = "country", EmitDefaultValue = false)]
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         /// <summary>
         /// Postal code.
         /// </summary>
         /// <value>Postal code.</value>
         [DataMember(Name = "postal_code", IsRequired = true, EmitDefaultValue = true)]
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
 
         /// <summary>
         /// Phone number of the contact person at this address.
         /// </summary>
         /// <value>Phone number of the contact person at this address.</value>
         [DataMember(Name = "phone", EmitDefaultValue = false)]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         /// <summary>
         /// Email of the contact person at this address.
         /// </summary>
         /// <value>Email of the contact person at this address.</value>
         [DataMember(Name = "email", EmitDefaultValue = false)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

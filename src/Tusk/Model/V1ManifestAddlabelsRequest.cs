@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -21,6 +22,11 @@ namespace Tusk.Model
     [DataContract(Name = "V1ManifestAddlabelsRequest")]
     public partial class V1ManifestAddlabelsRequest : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="V1ManifestAddlabelsRequest" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public V1ManifestAddlabelsRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="V1ManifestAddlabelsRequest" /> class.
         /// </summary>
@@ -37,14 +43,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Label Id to add to manifest</value>
         [DataMember(Name = "label_ids", EmitDefaultValue = false)]
-        public List<int> LabelIds { get; set; }
+        public List<int>? LabelIds { get; set; }
 
         /// <summary>
         /// Shipments to add to manifest
         /// </summary>
         /// <value>Shipments to add to manifest</value>
         [DataMember(Name = "shipment_tracking_numbers", EmitDefaultValue = false)]
-        public List<string> ShipmentTrackingNumbers { get; set; }
+        public List<string>? ShipmentTrackingNumbers { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

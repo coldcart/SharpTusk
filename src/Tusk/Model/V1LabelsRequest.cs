@@ -26,13 +26,14 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="V1LabelsRequest" /> class.
         /// </summary>
         [JsonConstructor]
-        protected V1LabelsRequest() { }
+        public V1LabelsRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="V1LabelsRequest" /> class.
         /// </summary>
         /// <param name="labelFormat">Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified..</param>
         /// <param name="shipment">shipment (required).</param>
-        public V1LabelsRequest(string labelFormat = default(string), CreateShipment shipment = default(CreateShipment))
+        /// <param name="finalMileCarrier">Generate a label for a specific final mile carrier. If nothing is specified, the default carrier will be used.</param>
+        public V1LabelsRequest(string labelFormat = default(string), CreateShipment shipment = default(CreateShipment), string finalMileCarrier = default(string))
         {
             // to ensure "shipment" is required (not null)
             if (shipment == null)
@@ -41,20 +42,39 @@ namespace Tusk.Model
             }
             this.Shipment = shipment;
             this.LabelFormat = labelFormat;
+            this.FinalMileCarrier = finalMileCarrier;
         }
+        
+        /// <summary>
+        /// Generate a label for a specific final mile carrier. If nothing is specified, the default carrier will be used.
+        /// <value>
+        /// Options are:
+        /// cdl,
+        /// gls-us,
+        /// lso,
+        /// uds,
+        /// courier_express,
+        /// optima,
+        /// groscale,
+        /// speedx,
+        /// uniuni
+        /// </value>
+        /// </summary>
+        [DataMember(Name = "final_mile_carrier", EmitDefaultValue = false)]
+        public string? FinalMileCarrier { get; set; }
 
         /// <summary>
         /// Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.
         /// </summary>
         /// <value>Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.</value>
         [DataMember(Name = "label_format", EmitDefaultValue = false)]
-        public string LabelFormat { get; set; }
+        public string? LabelFormat { get; set; }
 
         /// <summary>
         /// Gets or Sets Shipment
         /// </summary>
-        [DataMember(Name = "shipment", IsRequired = true, EmitDefaultValue = true)]
-        public CreateShipment Shipment { get; set; }
+        [DataMember(Name = "shipment", EmitDefaultValue = true)]
+        public CreateShipment? Shipment { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -27,7 +27,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="CreateShipment" /> class.
         /// </summary>
         [JsonConstructor]
-        protected CreateShipment() { }
+        public CreateShipment() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateShipment" /> class.
         /// </summary>
@@ -65,26 +65,26 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Optional field for providing an identifier of the shipment. This can help identify shipments faster in case of a support issue. This field is limited to 50 characters and no validation of any data is performed on this.</value>
         [DataMember(Name = "external_reference", EmitDefaultValue = false)]
-        public string ExternalReference { get; set; }
+        public string? ExternalReference { get; set; }
 
         /// <summary>
         /// Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.
         /// </summary>
         /// <value>Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.</value>
         [DataMember(Name = "confirmation", EmitDefaultValue = false)]
-        public string Confirmation { get; set; }
+        public string? Confirmation { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressTo
         /// </summary>
         [DataMember(Name = "address_to", IsRequired = true, EmitDefaultValue = true)]
-        public Address AddressTo { get; set; }
+        public Address? AddressTo { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
-        public Address AddressFrom { get; set; }
+        public Address? AddressFrom { get; set; }
 
         /// <summary>
         /// Parcels sent as part of this Shipment.

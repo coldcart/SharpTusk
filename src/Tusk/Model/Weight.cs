@@ -26,7 +26,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="Weight" /> class.
         /// </summary>
         [JsonConstructor]
-        protected Weight() { }
+        public Weight() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Weight" /> class.
         /// </summary>

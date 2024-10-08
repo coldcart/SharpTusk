@@ -26,7 +26,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="Parcel" /> class.
         /// </summary>
         [JsonConstructor]
-        protected Parcel() { }
+        public Parcel() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Parcel" /> class.
         /// </summary>
@@ -51,14 +51,14 @@ namespace Tusk.Model
         /// <summary>
         /// Gets or Sets Dimensions
         /// </summary>
-        [DataMember(Name = "dimensions", IsRequired = true, EmitDefaultValue = true)]
-        public ParcelDimensions Dimensions { get; set; }
+        [DataMember(Name = "dimensions", EmitDefaultValue = true)]
+        public ParcelDimensions? Dimensions { get; set; }
 
         /// <summary>
         /// Gets or Sets Weight
         /// </summary>
-        [DataMember(Name = "weight", IsRequired = true, EmitDefaultValue = true)]
-        public ParcelWeight Weight { get; set; }
+        [DataMember(Name = "weight", EmitDefaultValue = true)]
+        public ParcelWeight? Weight { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

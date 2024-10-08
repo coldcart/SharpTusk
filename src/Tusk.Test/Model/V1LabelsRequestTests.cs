@@ -32,12 +32,12 @@ namespace Tusk.Test.Model
     public class V1LabelsRequestTests : IDisposable
     {
         // TODO uncomment below to declare an instance variable for V1LabelsRequest
-        //private V1LabelsRequest instance;
+        private V1LabelsRequest instance;
 
         public V1LabelsRequestTests()
         {
             // TODO uncomment below to create an instance of V1LabelsRequest
-            //instance = new V1LabelsRequest();
+            instance = new V1LabelsRequest();
         }
 
         public void Dispose()
@@ -51,8 +51,30 @@ namespace Tusk.Test.Model
         [Fact]
         public void V1LabelsRequestInstanceTest()
         {
-            // TODO uncomment below to test "IsType" V1LabelsRequest
-            //Assert.IsType<V1LabelsRequest>(instance);
+            var instance = new V1LabelsRequest
+            {
+                Shipment = new CreateShipment
+                {
+                    Parcels = new List<Parcel>()
+                    {
+                        new Parcel
+                        {
+                            Dimensions = new ParcelDimensions
+                            {
+                                Height = 1,
+                                Length = 1,
+                                Width = 1
+                            },
+                            Weight = new ParcelWeight
+                            {
+                                Unit = "Pound",
+                                Value = 1
+                            }
+                        }
+                    }
+                }
+            };
+            Assert.IsType<V1LabelsRequest>(instance);
         }
 
         /// <summary>

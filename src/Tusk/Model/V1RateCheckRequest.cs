@@ -27,7 +27,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="V1RateCheckRequest" /> class.
         /// </summary>
         [JsonConstructor]
-        protected V1RateCheckRequest() { }
+        public V1RateCheckRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="V1RateCheckRequest" /> class.
         /// </summary>
@@ -36,7 +36,8 @@ namespace Tusk.Model
         /// <param name="addressFrom">addressFrom (required).</param>
         /// <param name="postalCodeTo">Destination postal code (required).</param>
         /// <param name="parcels">Parcels sent as part of this Shipment. (required).</param>
-        public V1RateCheckRequest(string confirmation = default(string), string shipDate = default(string), Address addressFrom = default(Address), string postalCodeTo = default(string), List<Parcel> parcels = default(List<Parcel>))
+        /// <param name="finalMileCarrier">Check rate for a specific final mile carrier. If nothing is specified, the default carrier will be used.</param>
+        public V1RateCheckRequest(string confirmation = default(string), string shipDate = default(string), Address addressFrom = default(Address), string postalCodeTo = default(string), List<Parcel> parcels = default(List<Parcel>), string finalMileCarrier = default)
         {
             // to ensure "addressFrom" is required (not null)
             if (addressFrom == null)
@@ -58,41 +59,60 @@ namespace Tusk.Model
             this.Parcels = parcels;
             this.Confirmation = confirmation;
             this.ShipDate = shipDate;
+            this.FinalMileCarrier = finalMileCarrier;
         }
+        
+        /// <summary>
+        /// Check rate for a specific final mile carrier. If nothing is specified, the default carrier will be used.
+        /// <value>
+        /// Options are:
+        /// cdl,
+        /// gls-us,
+        /// lso,
+        /// uds,
+        /// courier_express,
+        /// optima,
+        /// groscale,
+        /// speedx,
+        /// uniuni
+        /// </value>
+        /// </summary>
+        [DataMember(Name = "final_mile_carrier", EmitDefaultValue = false)]
+        public string? FinalMileCarrier { get; set; }
 
         /// <summary>
         /// Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.
         /// </summary>
         /// <value>Request confirmation for this shipment. Options are: NONE, SIGNATURE, ADULT_SIGNATURE. Defaults to NONE if not specified. A surcharge might apply.</value>
         [DataMember(Name = "confirmation", EmitDefaultValue = false)]
-        public string Confirmation { get; set; }
+        public string? Confirmation { get; set; }
 
         /// <summary>
         /// Format YYYY-MM-DD. Date the carrier is expected to receive the parcel. Required to get estimated_delivery_date.
         /// </summary>
         /// <value>Format YYYY-MM-DD. Date the carrier is expected to receive the parcel. Required to get estimated_delivery_date.</value>
         [DataMember(Name = "ship_date", EmitDefaultValue = false)]
-        public string ShipDate { get; set; }
+        public string? ShipDate { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressFrom
         /// </summary>
         [DataMember(Name = "address_from", IsRequired = true, EmitDefaultValue = true)]
-        public Address AddressFrom { get; set; }
+        public Address? AddressFrom { get; set; }
 
         /// <summary>
         /// Destination postal code
         /// </summary>
         /// <value>Destination postal code</value>
         [DataMember(Name = "postal_code_to", IsRequired = true, EmitDefaultValue = true)]
-        public string PostalCodeTo { get; set; }
+        public string? PostalCodeTo { get; set; }
 
         /// <summary>
         /// Parcels sent as part of this Shipment.
         /// </summary>
         /// <value>Parcels sent as part of this Shipment.</value>
         [DataMember(Name = "parcels", IsRequired = true, EmitDefaultValue = true)]
-        public List<Parcel> Parcels { get; set; }
+        public List<Parcel>? Parcels { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

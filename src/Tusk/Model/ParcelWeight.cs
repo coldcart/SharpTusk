@@ -26,7 +26,7 @@ namespace Tusk.Model
         /// Initializes a new instance of the <see cref="ParcelWeight" /> class.
         /// </summary>
         [JsonConstructor]
-        protected ParcelWeight() { }
+        public ParcelWeight() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="ParcelWeight" /> class.
         /// </summary>
@@ -47,15 +47,15 @@ namespace Tusk.Model
         /// Weight amount, in unit specified.
         /// </summary>
         /// <value>Weight amount, in unit specified.</value>
-        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "value", EmitDefaultValue = true)]
         public decimal Value { get; set; }
 
         /// <summary>
         /// Unit of weight. Specify \&quot;Pound\&quot; or \&quot;Ounce\&quot;. Responses from this Api will be in ounces.
         /// </summary>
         /// <value>Unit of weight. Specify \&quot;Pound\&quot; or \&quot;Ounce\&quot;. Responses from this Api will be in ounces.</value>
-        [DataMember(Name = "unit", IsRequired = true, EmitDefaultValue = true)]
-        public string Unit { get; set; }
+        [DataMember(Name = "unit", EmitDefaultValue = true)]
+        public string? Unit { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

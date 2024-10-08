@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -21,6 +22,11 @@ namespace Tusk.Model
     [DataContract(Name = "V1ManifestRemovelabelsRequest")]
     public partial class V1ManifestRemovelabelsRequest : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of <see cref="V1ManifestRemovelabelsRequest"/>
+        /// </summary>
+        [JsonConstructor]
+        public V1ManifestRemovelabelsRequest() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="V1ManifestRemovelabelsRequest" /> class.
         /// </summary>
@@ -37,14 +43,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>Label Id to remove from manifest</value>
         [DataMember(Name = "label_ids", EmitDefaultValue = false)]
-        public List<int> LabelIds { get; set; }
+        public List<int>? LabelIds { get; set; }
 
         /// <summary>
         /// Shipments to remove to manifest
         /// </summary>
         /// <value>Shipments to remove to manifest</value>
         [DataMember(Name = "shipment_tracking_numbers", EmitDefaultValue = false)]
-        public List<string> ShipmentTrackingNumbers { get; set; }
+        public List<string>? ShipmentTrackingNumbers { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

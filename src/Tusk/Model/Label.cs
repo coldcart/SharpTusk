@@ -11,6 +11,7 @@
 
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Tusk.Model
 {
@@ -20,6 +21,12 @@ namespace Tusk.Model
     [DataContract(Name = "Label")]
     public partial class Label : BaseModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Label" /> class.
+        /// </summary>
+        [JsonConstructor]
+        public Label() { }
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Label" /> class.
         /// </summary>
@@ -67,7 +74,7 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to fetch the Label to print.</value>
         [DataMember(Name = "label_url", EmitDefaultValue = false)]
-        public string LabelUrl { get; set; }
+        public string? LabelUrl { get; set; }
 
         /// <summary>
         /// Purchase price of the Label.
@@ -81,14 +88,14 @@ namespace Tusk.Model
         /// </summary>
         /// <value>URL to a tracking page for this Label.</value>
         [DataMember(Name = "tracking_url", EmitDefaultValue = false)]
-        public string TrackingUrl { get; set; }
+        public string? TrackingUrl { get; set; }
 
         /// <summary>
         /// Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.
         /// </summary>
         /// <value>Format of labels to be returned from this purchase. Options are: PDF4X5, ZPL4X5. Defaults to PDF4X5 if not specified.</value>
         [DataMember(Name = "label_format", EmitDefaultValue = false)]
-        public string LabelFormat { get; set; }
+        public string? LabelFormat { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
