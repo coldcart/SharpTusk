@@ -37,7 +37,7 @@ namespace Tusk.Model
         /// <param name="labels">labels.</param>
         /// <param name="addressFrom">addressFrom.</param>
         /// <param name="addressTo">addressTo.</param>
-        public TrackingShipment(int shipmentId = default(int), string trackingNumber = default(string), List<TrackingShipmentLabel> labels = default(List<TrackingShipmentLabel>), TrackingLocation addressFrom = default(TrackingLocation), TrackingLocation addressTo = default(TrackingLocation))
+        public TrackingShipment(int shipmentId = default(int), string trackingNumber = default(string), List<TrackingShipmentLabel> labels = default(List<TrackingShipmentLabel>), TrackingShipmentLocation addressFrom = default(TrackingShipmentLocation), TrackingShipmentLocation addressTo = default(TrackingShipmentLocation))
         {
             this.ShipmentId = shipmentId;
             this.TrackingNumber = trackingNumber;
@@ -72,14 +72,14 @@ namespace Tusk.Model
         /// </summary>
         [DataMember(Name = "address_from", EmitDefaultValue = false)]
         [JsonPropertyName("address_from")]
-        public TrackingLocation? AddressFrom { get; set; }
+        public TrackingShipmentLocation? AddressFrom { get; set; }
 
         /// <summary>
         /// Gets or Sets AddressTo
         /// </summary>
         [DataMember(Name = "address_to", EmitDefaultValue = false)]
         [JsonPropertyName("address_to")]
-        public TrackingLocation? AddressTo { get; set; }
+        public TrackingShipmentLocation? AddressTo { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -1,7 +1,11 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Tusk.Utils;
 
+namespace Tusk.Model;
+
+/// <summary>
+/// Base class for all models
+/// </summary>
 public abstract partial class BaseModel : IValidatableObject
 {
     /// <summary>

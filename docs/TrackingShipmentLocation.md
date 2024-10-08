@@ -1,4 +1,4 @@
-# Tusk.Model.TrackingLocation
+# Tusk.Model.TrackingShipmentLocation
 Location of the tracking event.
 
 ## Properties

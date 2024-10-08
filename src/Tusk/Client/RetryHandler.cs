@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Tusk.Client;
 
+/// <summary>
+/// Handler to retry requests based on the status code.
+/// </summary>
 public class RetryHandler : DelegatingHandler
 {
     private readonly int _maxRetries;
@@ -21,6 +24,13 @@ public class RetryHandler : DelegatingHandler
         _delay = delay ?? TimeSpan.FromSeconds(0);
     }
 
+    /// <summary>
+    /// Send request with retry logic.
+    /// </summary>
+    /// <param name="request">HttpRequest</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>HttpResponseMessage</returns>
+    /// <exception cref="HttpRequestException"></exception>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         for (int retry = 0; retry <= _maxRetries; retry++)

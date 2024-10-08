@@ -30,9 +30,9 @@ namespace Tusk.Client
         {
             // OpenAPI generated types generally hide default constructors.
 #if NET7_0
-            PropertyNamingPolicy = new SeperatorNamingPolicy(),
+            PropertyNamingPolicy = new SeparatorNamingPolicy(),
 #else
-                        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
 #endif
             PropertyNameCaseInsensitive = true,
         };
@@ -205,7 +205,7 @@ namespace Tusk.Client
         {
             // OpenAPI generated types generally hide default constructors.
 #if NET7_0
-            PropertyNamingPolicy = new SeperatorNamingPolicy(),
+            PropertyNamingPolicy = new SeparatorNamingPolicy(),
 #else
                         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
 #endif

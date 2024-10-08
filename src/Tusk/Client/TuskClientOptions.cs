@@ -1,5 +1,8 @@
 namespace Tusk.Client;
 
+/// <summary>
+/// Overall TuskClient options settings. <see cref="TuskClient"/>
+/// </summary>
 public class TuskClientOptions
 {
     /// <summary>

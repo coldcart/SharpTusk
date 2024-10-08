@@ -265,7 +265,7 @@ Class | Method | HTTP request | Description
  - [Model.TrackingLabel](docs/TrackingLabel.md)
  - [Model.TrackingLabelHistory](docs/TrackingLabelHistory.md)
  - [Model.TrackingLabelLocation](docs/TrackingLabelLocation.md)
- - [Model.TrackingLocation](docs/TrackingLocation.md)
+ - [Model.TrackingShipmentLocation](docs/TrackingShipmentLocation.md)
  - [Model.TrackingShipment](docs/TrackingShipment.md)
  - [Model.TrackingShipmentLabel](docs/TrackingShipmentLabel.md)
  - [Model.V1LabelsRequest](docs/V1LabelsRequest.md)

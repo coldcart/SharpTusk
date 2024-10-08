@@ -18,23 +18,23 @@ namespace Tusk.Model
     /// <summary>
     /// Location of the tracking event.
     /// </summary>
-    [DataContract(Name = "TrackingLocation")]
-    public partial class TrackingLocation : BaseModel
+    [DataContract(Name = "TrackingShipmentLocation")]
+    public partial class TrackingShipmentLocation : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackingLocation" /> class.
+        /// Initializes a new instance of the <see cref="TrackingShipmentLocation" /> class.
         /// </summary>
         [JsonConstructor]
-        public TrackingLocation()
+        public TrackingShipmentLocation()
         {
         }
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackingLocation" /> class.
+        /// Initializes a new instance of the <see cref="TrackingShipmentLocation" /> class.
         /// </summary>
         /// <param name="city">city.</param>
         /// <param name="state">state.</param>
         /// <param name="postalCode">postalCode.</param>
-        public TrackingLocation(string city = default(string), string state = default(string), string postalCode = default(string))
+        public TrackingShipmentLocation(string city = default(string), string state = default(string), string postalCode = default(string))
         {
             this.City = city;
             this.State = state;

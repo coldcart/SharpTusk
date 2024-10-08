@@ -3,6 +3,9 @@ using Microsoft.Extensions.Options;
 
 namespace Tusk.Client;
 
+/// <summary>
+/// Helper class for registering TuskClient with the DI container.
+/// </summary>
 public static class Helpers
 {
     /// <summary>

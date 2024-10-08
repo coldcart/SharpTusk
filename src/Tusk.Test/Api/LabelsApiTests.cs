@@ -43,7 +43,7 @@ namespace Tusk.Test.Api
             ReadableConfiguration config = new ReadableConfiguration();
             config.BasePath = "https://apisandbox.tusklogistics.com";
             // Configure API key authorization: ApiKeyAuth
-            config.ApiKey.Add("x-api-key", "sJK8lCr7XZzVUYKP2FFZD4VSdU3YZxOCxt1E9QZV");
+            config.ApiKey.Add("x-api-key", "X_API_KEY");
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             instance = new LabelsApi(httpClient, config, httpClientHandler);
@@ -79,7 +79,7 @@ namespace Tusk.Test.Api
         /// <summary>
         /// Test PurchaseLabels
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Local testing")]
         public async Task PurchaseLabelsTest()
         {
             V1LabelsRequest? v1LabelsRequest = new V1LabelsRequest
@@ -106,14 +106,14 @@ namespace Tusk.Test.Api
                     AddressTo = new Address
                     {
                         Name = "Dave",
-                        Street1 = "2127 W Division St",
-                        Street2 = "Apt 2",
+                        Street1 = "123 South Street",
+                        Street2 = "Unit 2",
                         City = "Chicago",
                         State = "IL",
-                        PostalCode = "60622",
+                        PostalCode = "60601",
                         Country = "US",
                         Phone = "773-123-4567",
-                        Email = "david@coldcart.co",
+                        Email = "dave@email.com",
                     },
                     AddressFrom = new Address
                     {
