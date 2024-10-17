@@ -52,13 +52,14 @@ public static class Helpers
         {
             var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
             var httpClient = httpClientFactory.CreateClient("TuskClient");
+            var configuration = sp.GetRequiredService<IReadableConfiguration>();
             if (useRetryHandler)
             {
                 var retryHandler = sp.GetRequiredService<RetryHandler>();
 
-                return new ApiClient(httpClient, retryHandler: retryHandler);
+                return new ApiClient(httpClient, retryHandler: retryHandler, configuration: configuration);
             }
-            return new ApiClient(httpClient);
+            return new ApiClient(httpClient, configuration: configuration);
         });
         if (useRetryHandler)
         {

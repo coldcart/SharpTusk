@@ -257,13 +257,14 @@ namespace Tusk.Client
         /// <param name="client">An instance of HttpClient.</param>
         /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
         /// <param name="retryHandler">An optional instance of RetryHandler that is used by HttpClient.</param>
+        /// <param name="configuration">An optional instance of IReadableConfiguration that is used by HttpClient.</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <remarks>
         /// Some configuration settings will not be applied without passing an HttpClientHandler.
         /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
         /// </remarks>
-        public ApiClient(HttpClient client, HttpClientHandler? handler = null, RetryHandler? retryHandler = null) :
-            this(client, Tusk.Client.GlobalReadableConfiguration.Instance.BasePath, handler, retryHandler)
+        public ApiClient(HttpClient client, HttpClientHandler? handler = null, RetryHandler? retryHandler = null, IReadableConfiguration? configuration = null) :
+            this(client, configuration != null ? configuration.BasePath : Tusk.Client.GlobalReadableConfiguration.Instance.BasePath, handler, retryHandler)
         {
         }
 
