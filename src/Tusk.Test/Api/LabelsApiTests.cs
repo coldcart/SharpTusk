@@ -21,6 +21,7 @@ using Xunit;
 using Tusk.Client;
 using Tusk.Api;
 using Tusk.Model;
+using Xunit.Abstractions;
 
 // uncomment below to import models
 //using Tusk.Model;
@@ -36,12 +37,14 @@ namespace Tusk.Test.Api
     /// </remarks>
     public class LabelsApiTests : IDisposable
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private LabelsApi instance;
 
-        public LabelsApiTests()
+        public LabelsApiTests(ITestOutputHelper testOutputHelper)
         {
+            _testOutputHelper = testOutputHelper;
             ReadableConfiguration config = new ReadableConfiguration();
-            config.BasePath = "https://apisandbox.tusklogistics.com";
+            config.BasePath = "https://api.tusklogistics.com";
             // Configure API key authorization: ApiKeyAuth
             config.ApiKey.Add("x-api-key", "X_API_KEY");
             HttpClient httpClient = new HttpClient();
@@ -79,7 +82,7 @@ namespace Tusk.Test.Api
         /// <summary>
         /// Test PurchaseLabels
         /// </summary>
-        [Fact(Skip = "Local testing")]
+        [Fact()]
         public async Task PurchaseLabelsTest()
         {
             V1LabelsRequest? v1LabelsRequest = new V1LabelsRequest
@@ -92,40 +95,41 @@ namespace Tusk.Test.Api
                         {
                             Dimensions = new ParcelDimensions
                             {
-                                Height = 10,
-                                Width = 10,
-                                Length = 10,
+                                Height = Math.Ceiling(8.63m),
+                                Width = Math.Ceiling(8.63m),
+                                Length = Math.Ceiling(8.63m),
                             },
                             Weight = new ParcelWeight
                             {
                                 Unit = "Pound",
-                                Value = 10
+                                Value = Math.Ceiling(1.0m)
                             }
                         }
                     },
                     AddressTo = new Address
                     {
                         Name = "Dave",
-                        Street1 = "123 South Street",
-                        Street2 = "Unit 2",
-                        City = "Chicago",
-                        State = "IL",
-                        PostalCode = "60601",
+                        Street1 = "2026 Jenna Place",
+                        Street2 = "",
+                        City = "Escondido",
+                        State = "CA",
+                        PostalCode = "92029",
                         Country = "US",
                         Phone = "773-123-4567",
                         Email = "dave@email.com",
                     },
                     AddressFrom = new Address
                     {
-                        Street1 = "571 Wheeling Rd",
-                        City = "Wheeling",
-                        State = "IL",
-                        PostalCode = "60090",
+                        Street1 = "2331 Sturgis Rd",
+                        City = "Oxnard",
+                        State = "CA",
+                        PostalCode = "93030",
                     },
-                    ExternalReference = "1234",
-                    
-                }
+                    ExternalReference = "12341212",
+                },
+                LabelFormat = "PNG4X5"
             };
+            _testOutputHelper.WriteLine("PurchaseLabelsTest v1LabelsRequest: " + v1LabelsRequest.ToString());
             var response = await instance.PurchaseLabelsAsync(v1LabelsRequest);
             await instance.VoidaLabelAsync(response.Labels[0].Id);
             //Assert.IsType<ShipmentPurchaseResponse>(response);
