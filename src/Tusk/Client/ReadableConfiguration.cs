@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using Tusk.Model;
 
 namespace Tusk.Client
 {
@@ -49,18 +50,21 @@ namespace Tusk.Client
         /// </summary>
         public static readonly ExceptionFactory DefaultExceptionFactory = (methodName, response) =>
         {
+            var responseError = response.Content as APIError;
             var status = (int)response.StatusCode;
-            if (status >= 400)
-            {
-                return new ApiException(status,
-                    string.Format("Error calling {0}: {1}", methodName, response.RawContent),
-                    response.RawContent, response.Headers);
-            }
             if (status == 0)
             {
                 return new ApiException(status,
-                    string.Format("Error calling {0}: {1}", methodName, response.ErrorText), response.ErrorText);
+                    $"Error calling {methodName}: {response.ErrorText}", response.ErrorText);
             }
+
+            if (status >= 400)
+            {
+                return new ApiException(status,
+                    responseError?.Title ?? $"Error calling {methodName}: {response.RawContent}",
+                    response.RawContent, response.Headers);
+            }
+
             return null;
         };
 
@@ -123,15 +127,17 @@ namespace Tusk.Client
             Servers = new List<IReadOnlyDictionary<string, object>>()
             {
                 {
-                    new Dictionary<string, object> {
-                        {"url", "https://apisandbox.tusklogistics.com"},
-                        {"description", "Sandbox server (uses test data)"},
+                    new Dictionary<string, object>
+                    {
+                        { "url", "https://apisandbox.tusklogistics.com" },
+                        { "description", "Sandbox server (uses test data)" },
                     }
                 },
                 {
-                    new Dictionary<string, object> {
-                        {"url", "https://api.tusklogistics.com"},
-                        {"description", "Production server (uses live data)"},
+                    new Dictionary<string, object>
+                    {
+                        { "url", "https://api.tusklogistics.com" },
+                        { "description", "Production server (uses live data)" },
                     }
                 }
             };
@@ -179,12 +185,12 @@ namespace Tusk.Client
                 ApiKeyPrefix.Add(keyValuePair);
             }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadableConfiguration" /> class
         /// </summary>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
-        public ReadableConfiguration(TuskClientOptions options): this()
+        public ReadableConfiguration(TuskClientOptions options) : this()
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -202,7 +208,7 @@ namespace Tusk.Client
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath 
+        public virtual string BasePath
         {
             get { return _basePath; }
             set { _basePath = value; }
@@ -223,14 +229,8 @@ namespace Tusk.Client
         [Obsolete("Use DefaultHeaders instead.")]
         public virtual IDictionary<string, string> DefaultHeader
         {
-            get
-            {
-                return DefaultHeaders;
-            }
-            set
-            {
-                DefaultHeaders = value;
-            }
+            get { return DefaultHeaders; }
+            set { DefaultHeaders = value; }
         }
 
         /// <summary>
@@ -384,6 +384,7 @@ namespace Tusk.Client
                 {
                     throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
                 }
+
                 _apiKeyPrefix = value;
             }
         }
@@ -401,6 +402,7 @@ namespace Tusk.Client
                 {
                     throw new InvalidOperationException("ApiKey collection may not be null.");
                 }
+
                 _apiKey = value;
             }
         }
@@ -418,6 +420,7 @@ namespace Tusk.Client
                 {
                     throw new InvalidOperationException("Servers may not be null.");
                 }
+
                 _servers = value;
             }
         }
@@ -435,6 +438,7 @@ namespace Tusk.Client
                 {
                     throw new InvalidOperationException("Operation servers may not be null.");
                 }
+
                 _operationServers = value;
             }
         }
@@ -496,11 +500,13 @@ namespace Tusk.Client
         /// <param name="index">Array index of the server settings.</param>
         /// <param name="inputVariables">Dictionary of the variables and the corresponding values.</param>
         /// <return>The server URL.</return>
-        private string GetServerUrl(IList<IReadOnlyDictionary<string, object>> servers, int index, Dictionary<string, string> inputVariables)
+        private string GetServerUrl(IList<IReadOnlyDictionary<string, object>> servers, int index,
+            Dictionary<string, string> inputVariables)
         {
             if (index < 0 || index >= servers.Count)
             {
-                throw new InvalidOperationException($"Invalid index {index} when selecting the server. Must be less than {servers.Count}.");
+                throw new InvalidOperationException(
+                    $"Invalid index {index} when selecting the server. Must be less than {servers.Count}.");
             }
 
             if (inputVariables == null)
@@ -514,10 +520,11 @@ namespace Tusk.Client
             if (server.ContainsKey("variables"))
             {
                 // go through each variable and assign a value
-                foreach (KeyValuePair<string, object> variable in (IReadOnlyDictionary<string, object>)server["variables"])
+                foreach (KeyValuePair<string, object> variable in (IReadOnlyDictionary<string, object>)server[
+                             "variables"])
                 {
-
-                    IReadOnlyDictionary<string, object> serverVariables = (IReadOnlyDictionary<string, object>)(variable.Value);
+                    IReadOnlyDictionary<string, object> serverVariables =
+                        (IReadOnlyDictionary<string, object>)(variable.Value);
 
                     if (inputVariables.ContainsKey(variable.Key))
                     {
@@ -527,7 +534,8 @@ namespace Tusk.Client
                         }
                         else
                         {
-                            throw new InvalidOperationException($"The variable `{variable.Key}` in the server URL has invalid value #{inputVariables[variable.Key]}. Must be {(List<string>)serverVariables["enum_values"]}");
+                            throw new InvalidOperationException(
+                                $"The variable `{variable.Key}` in the server URL has invalid value #{inputVariables[variable.Key]}. Must be {(List<string>)serverVariables["enum_values"]}");
                         }
                     }
                     else
@@ -540,7 +548,7 @@ namespace Tusk.Client
 
             return url;
         }
-        
+
         /// <summary>
         /// Gets and Sets the RemoteCertificateValidationCallback
         /// </summary>
@@ -557,7 +565,7 @@ namespace Tusk.Client
         {
             string report = "C# SDK (Tusk) Debug Report:\n";
             report += "    OS: " + System.Environment.OSVersion + "\n";
-            report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
+            report += "    .NET Framework Version: " + System.Environment.Version + "\n";
             report += "    Version of the API: 1.0\n";
             report += "    SDK Package Version: 1.0.0\n";
 
@@ -588,19 +596,22 @@ namespace Tusk.Client
         #endregion Methods
 
         #region Static Members
+
         /// <summary>
         /// Merge configurations.
         /// </summary>
         /// <param name="first">First configuration.</param>
         /// <param name="second">Second configuration.</param>
         /// <return>Merged configuration.</return>
-        public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first, IReadableConfiguration second)
+        public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first,
+            IReadableConfiguration second)
         {
             if (second == null) return first ?? GlobalReadableConfiguration.Instance;
 
             Dictionary<string, string> apiKey = first.ApiKey.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Dictionary<string, string> apiKeyPrefix = first.ApiKeyPrefix.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Dictionary<string, string> defaultHeaders = first.DefaultHeaders.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            Dictionary<string, string> defaultHeaders =
+                first.DefaultHeaders.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             foreach (var kvp in second.ApiKey) apiKey[kvp.Key] = kvp.Value;
             foreach (var kvp in second.ApiKeyPrefix) apiKeyPrefix[kvp.Key] = kvp.Value;
@@ -622,10 +633,12 @@ namespace Tusk.Client
                 DateTimeFormat = second.DateTimeFormat ?? first.DateTimeFormat,
                 ClientCertificates = second.ClientCertificates ?? first.ClientCertificates,
                 UseDefaultCredentials = second.UseDefaultCredentials,
-                RemoteCertificateValidationCallback = second.RemoteCertificateValidationCallback ?? first.RemoteCertificateValidationCallback,
+                RemoteCertificateValidationCallback = second.RemoteCertificateValidationCallback ??
+                                                      first.RemoteCertificateValidationCallback,
             };
             return config;
         }
+
         #endregion Static Members
     }
 }
