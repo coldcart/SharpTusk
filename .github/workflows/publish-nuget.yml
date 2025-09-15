@@ -15,16 +15,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
-
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+        dotnet-version: '8.0.x'  
 
     - name: Pack
-      run: dotnet pack src/Tusk/Tusk.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=${{ github.event.release.tag_name }}
-
+      run: dotnet pack src/Tusk/Tusk.csproj -c Release --property:PackageOutputPath=out
     - name: Push to NuGet
       run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
