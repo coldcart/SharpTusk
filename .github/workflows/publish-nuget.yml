@@ -17,7 +17,7 @@ jobs:
       with:
           source-url: https://nuget.pkg.github.com/coldcart/index.json
       env:
-          NUGET_AUTH_TOKEN: ${{secrets.PAT}}
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
 
     - name: Pack
       run: |
