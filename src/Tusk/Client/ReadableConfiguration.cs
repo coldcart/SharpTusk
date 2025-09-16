@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.Text.Json;
 using Tusk.Model;
 
 namespace Tusk.Client
@@ -50,7 +51,15 @@ namespace Tusk.Client
         /// </summary>
         public static readonly ExceptionFactory DefaultExceptionFactory = (methodName, response) =>
         {
-            var responseError = response.Content as APIError;
+            APIError responseError = null;
+            try
+            {
+                responseError = JsonSerializer.Deserialize<APIError>(response.RawContent);
+            }
+            catch (Exception)
+            {
+            }
+            
             var status = (int)response.StatusCode;
             if (status == 0)
             {
@@ -61,7 +70,7 @@ namespace Tusk.Client
             if (status >= 400)
             {
                 return new ApiException(status,
-                    responseError?.Title ?? $"Error calling {methodName}: {response.ErrorText}",
+                    responseError?.Title ?? $"Error calling {methodName}: {response.RawContent}",
                     response.Content, response.Headers);
             }
 
