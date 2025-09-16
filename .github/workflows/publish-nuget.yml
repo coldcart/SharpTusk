@@ -15,9 +15,15 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'  
+          source-url: https://nuget.pkg.github.com/coldcart/index.json
+	  dotnet-version: '8.0.x'  
+      env:
+          NUGET_AUTH_TOKEN: ${{secrets.PAT}}
 
     - name: Pack
-      run: dotnet pack src/Tusk/Tusk.csproj -c Release --property:PackageOutputPath=out
+      run: |
+	cd src/Tusk/
+	dotnet pack -c Release --property:PackageOutputPath=out
+    
     - name: Push to NuGet
-      run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push src/Tusk/out/*.nupkg --skip-duplicate --no-symbols
