@@ -61,8 +61,8 @@ namespace Tusk.Client
             if (status >= 400)
             {
                 return new ApiException(status,
-                    responseError?.Title ?? $"Error calling {methodName}: {response.RawContent}",
-                    response.RawContent, response.Headers);
+                    responseError?.Title ?? $"Error calling {methodName}: {response.ErrorText}",
+                    response.Content, response.Headers);
             }
 
             return null;
